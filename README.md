@@ -61,14 +61,3 @@ Feel free to open issues or pull requests! :raised_hands:
 ***
 
 > "CAPE helps you find your path—one prediction at a time!" :compass:
-
-(https://gist.github.com/rxaviers/7360908)
-[2](https://gist.github.com/roachhd/1f029bd4b50b8a524f3c)
-[3](https://github.com/ikatyang/emoji-cheat-sheet)
-[4](https://gist.github.com/468c0a0a6c854ed5780a32deb73d457f)
-[5](https://jimit105.github.io/github-emoji-cheatsheet/)
-[6](https://dev.to/nikolab/complete-list-of-github-markdown-emoji-markup-5aia)
-[7](https://markdown-all-in-one.github.io/docs/contributing/emoji.html)
-[8](https://emojipedia.org/github)
-[9](https://docs.github.com/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
-[10](https://www.reddit.com/r/github/comments/1kcci2h/do_you_like_a_readme_with_or_without_emojis/)
