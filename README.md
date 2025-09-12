@@ -1,7 +1,7 @@
 # 🤖 CAPE Model: Career Recommendation Engine
 
 ## 🚀 Overview
-CAPE uses a machine learning model to help students discover the best career paths based on their skills, interests, and education. The model analyzes your profile and suggests careers that fit you best! :mag:
+> CAPE uses a machine learning model to help students discover the best career paths based on their skills, interests, and education. The model analyzes your profile and suggests careers that fit you best! :mag:
 
 ***
 
@@ -57,11 +57,6 @@ print('Recommended Career:', le_career.inverse_transform(pred)[0])
 
 ## 🙌 Contributing
 Feel free to open issues or pull requests! :raised_hands:
-
-***
-
-## 📚 Resources
-- [GitHub Emoji Cheat Sheet](https://gist.github.com/rxaviers/7360908) :smiley:
 
 ***
 
