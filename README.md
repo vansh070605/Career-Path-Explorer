@@ -62,7 +62,7 @@ Feel free to open issues or pull requests! :raised_hands:
 
 > "CAPE helps you find your path—one prediction at a time!" :compass:
 
-[1](https://gist.github.com/rxaviers/7360908)
+(https://gist.github.com/rxaviers/7360908)
 [2](https://gist.github.com/roachhd/1f029bd4b50b8a524f3c)
 [3](https://github.com/ikatyang/emoji-cheat-sheet)
 [4](https://gist.github.com/468c0a0a6c854ed5780a32deb73d457f)
