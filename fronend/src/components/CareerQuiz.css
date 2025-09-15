@@ -1,0 +1,63 @@
+.career-quiz-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.quiz-form {
+  background-color: var(--dark-secondary);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.question-block {
+  margin-bottom: 1.5rem;
+}
+
+.question-block label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--light-text);
+}
+
+.question-block input,
+.question-block select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--secondary-accent);
+  background-color: var(--dark-main);
+  color: var(--light-text);
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.quiz-results {
+  background-color: var(--dark-secondary);
+  border-left: 5px solid var(--primary-accent);
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.quiz-results h3 {
+  color: var(--primary-accent);
+}
+
+.quiz-results p {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: var(--light-text);
+}
+
+.quiz-form .btn-primary,
+.quiz-results .btn-primary {
+    background-color: var(--primary-accent);
+    color: var(--dark-main);
+    border: none;
+    font-weight: bold;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
