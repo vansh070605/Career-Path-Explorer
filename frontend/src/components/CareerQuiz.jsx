@@ -15,55 +15,117 @@ const questions = [
 ];
 
 const CareerQuiz = () => {
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const [result, setResult] = useState(null);
+  const [animation, setAnimation] = useState('slide-in');
+
+  const currentQuestion = questions[currentQuestionIndex];
+  const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
 
   const handleChange = (id, value) => {
     setAnswers(prev => ({ ...prev, [id]: value }));
+  };
+
+  const handleNext = () => {
+    if (currentQuestionIndex < questions.length - 1) {
+      setAnimation('slide-out');
+      setTimeout(() => {
+        setCurrentQuestionIndex(prev => prev + 1);
+        setAnimation('slide-in');
+      }, 300);
+    }
+  };
+
+  const handleBack = () => {
+    if (currentQuestionIndex > 0) {
+      setAnimation('slide-out-back');
+       setTimeout(() => {
+        setCurrentQuestionIndex(prev => prev - 1);
+        setAnimation('slide-in-back');
+      }, 300);
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     let recommendation = "Software Engineer at a Startup.";
     let improvement = "Focus on coding skills and prepare for technical interviews.";
-    
-    if (answers.Q4 === 'Theoretical' && answers.Q5 === 'Research Lab') {
-      recommendation = "Research Scientist.";
-      improvement = "Strengthen your fundamentals in core subjects and consider a Master's degree.";
-    } else if (answers.Q8 === 'Work-Life Balance' && answers.Q5 === 'Corporate') {
-      recommendation = "Data Analyst in a Corporate firm.";
-      improvement = "Develop skills in SQL, Python, and data visualization tools.";
-    }
-
     setResult({ recommendation, improvement });
+  };
+  
+  const handleReset = () => {
+    setAnswers({});
+    setCurrentQuestionIndex(0);
+    setResult(null);
   };
 
   return (
     <div className="career-quiz-container">
-      <h2>Find Your Career Path</h2>
       {!result ? (
-        <form onSubmit={handleSubmit} className="quiz-form">
-          {questions.map(q => (
-            <div key={q.id} className="question-block">
-              <label>{q.text}</label>
-              {q.type === 'text' ? (
-                <input type="text" onChange={e => handleChange(q.id, e.target.value)} required />
+        <>
+          <div className="quiz-progress-bar">
+            <div className="progress-fill" style={{ width: `${progress}%` }}></div>
+          </div>
+          <div className="quiz-card" key={currentQuestionIndex}>
+             <div className={`question-content ${animation}`}>
+              <span className="question-number">Question {currentQuestionIndex + 1}/{questions.length}</span>
+              <h2 className="question-text">{currentQuestion.text}</h2>
+              {currentQuestion.type === 'text' ? (
+                <input 
+                  type="text" 
+                  value={answers[currentQuestion.id] || ''}
+                  onChange={e => handleChange(currentQuestion.id, e.target.value)} 
+                  placeholder="Type your answer here..."
+                  className="quiz-input"
+                />
               ) : (
-                <select onChange={e => handleChange(q.id, e.target.value)} required>
-                  <option value="">Select an option</option>
-                  {q.options.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                <select 
+                  value={answers[currentQuestion.id] || ''}
+                  onChange={e => handleChange(currentQuestion.id, e.target.value)}
+                  className="quiz-select"
+                >
+                  <option value="" disabled>Select an option</option>
+                  {currentQuestion.options.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                 </select>
               )}
             </div>
-          ))}
-          <button type="submit" className="btn-primary">Get Recommendation</button>
-        </form>
+          </div>
+          <div className="quiz-navigation">
+            <button onClick={handleBack} className="btn-nav btn-back" disabled={currentQuestionIndex === 0}>
+              <i className="fas fa-arrow-left"></i> Back
+            </button>
+            {currentQuestionIndex < questions.length - 1 ? (
+              <button onClick={handleNext} className="btn-nav btn-next">
+                Next <i className="fas fa-arrow-right"></i>
+              </button>
+            ) : (
+              <button onClick={handleSubmit} className="btn-nav btn-submit">
+                Get Results ✨
+              </button>
+            )}
+          </div>
+        </>
       ) : (
         <div className="quiz-results">
-          <h3>Your Personalized Recommendation</h3>
-          <p><strong>Recommended Path:</strong> {result.recommendation}</p>
-          <p><strong>Areas to Improve:</strong> {result.improvement}</p>
-          <button onClick={() => setResult(null)} className="btn-primary">Retake Quiz</button>
+          <h3>Here's Your Path!</h3>
+          <div className="result-item">
+            <div className="result-icon"><i className="fas fa-rocket"></i></div>
+            <div className="result-text">
+              <h4>Recommended Path</h4>
+              <p>{result.recommendation}</p>
+            </div>
+          </div>
+          <div className="result-item">
+             <div className="result-icon"><i className="fas fa-tools"></i></div>
+            <div className="result-text">
+              <h4>Skills to Build</h4>
+              <p>{result.improvement}</p>
+            </div>
+          </div>
+          <button onClick={handleReset} className="btn-nav btn-retake">
+            <i className="fas fa-redo"></i> Retake Quiz
+          </button>
         </div>
       )}
     </div>
