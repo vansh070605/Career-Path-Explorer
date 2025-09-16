@@ -72,7 +72,7 @@ def home():
 
 @app.route("/recommend", methods=["POST"])
 def recommend():
-    if model is not None and len(feature_columns) > 0:
+    if model is not None and len(feature_columns) > 0: #lmao bss contri hona tha
         user_input = request.json or {}
         # Build a single-row feature dict initialized with zeros
         row = {col: 0 for col in feature_columns}
@@ -142,7 +142,7 @@ def recommend():
 
     # Fallback: original dataset matching (line-based exact match)
     if df.empty:
-        return jsonify({"error": "Dataset not loaded and model unavailable."}), 500
+        return jsonify({"error": "Dataset not loaded & model unavailable."}), 500
 
     user_input = request.json
     if not user_input:
