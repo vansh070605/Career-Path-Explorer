@@ -17,25 +17,40 @@ const questions = [
 const CareerQuiz = () => {
   const [answers, setAnswers] = useState({});
   const [result, setResult] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (id, value) => {
     setAnswers(prev => ({ ...prev, [id]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    let recommendation = "Software Engineer at a Startup.";
-    let improvement = "Focus on coding skills and prepare for technical interviews.";
-    
-    if (answers.Q4 === 'Theoretical' && answers.Q5 === 'Research Lab') {
-      recommendation = "Research Scientist.";
-      improvement = "Strengthen your fundamentals in core subjects and consider a Master's degree.";
-    } else if (answers.Q8 === 'Work-Life Balance' && answers.Q5 === 'Corporate') {
-      recommendation = "Data Analyst in a Corporate firm.";
-      improvement = "Develop skills in SQL, Python, and data visualization tools.";
-    }
+    setLoading(true);
+    setError("");
 
-    setResult({ recommendation, improvement });
+    try {
+      // Combine all answers into one text string
+      const combined = Object.values(answers).join(" ");
+
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/predict`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ features: combined })
+      });
+
+      const data = await res.json();
+
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      setResult({ recommendation: data.career });
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -47,7 +62,11 @@ const CareerQuiz = () => {
             <div key={q.id} className="question-block">
               <label>{q.text}</label>
               {q.type === 'text' ? (
-                <input type="text" onChange={e => handleChange(q.id, e.target.value)} required />
+                <input
+                  type="text"
+                  onChange={e => handleChange(q.id, e.target.value)}
+                  required
+                />
               ) : (
                 <select onChange={e => handleChange(q.id, e.target.value)} required>
                   <option value="">Select an option</option>
@@ -56,13 +75,15 @@ const CareerQuiz = () => {
               )}
             </div>
           ))}
-          <button type="submit" className="btn-primary">Get Recommendation</button>
+          <button type="submit" className="btn-primary" disabled={loading}>
+            {loading ? "Predicting..." : "Get Recommendation"}
+          </button>
+          {error && <p className="text-red-500 mt-2">{error}</p>}
         </form>
       ) : (
         <div className="quiz-results">
           <h3>Your Personalized Recommendation</h3>
           <p><strong>Recommended Path:</strong> {result.recommendation}</p>
-          <p><strong>Areas to Improve:</strong> {result.improvement}</p>
           <button onClick={() => setResult(null)} className="btn-primary">Retake Quiz</button>
         </div>
       )}

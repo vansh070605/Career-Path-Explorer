@@ -61,3 +61,4 @@ Feel free to open issues or pull requests! :raised_hands:
 ***
 
 > "CAPE helps you find your path—one prediction at a time!" :compass:
+//.\venv\Scripts\Activate.ps1
