@@ -6,6 +6,27 @@ import CareerQuiz from './CareerQuiz';
 import SkillBuilder from './SkillBuilder';
 import './Dashboard.css';
 
+const features = [
+  {
+    key: 'colleges',
+    icon: 'fas fa-university',
+    title: 'Explore Colleges',
+    description: 'Find details about Tier 1 and Tier 2 engineering colleges across India.',
+  },
+  {
+    key: 'quiz',
+    icon: 'fas fa-tasks',
+    title: 'AI Career Path Explorer',
+    description: 'Answer 10 questions to get a personalized career recommendation.',
+  },
+  {
+    key: 'skills',
+    icon: 'fas fa-lightbulb',
+    title: 'Skill Builder',
+    description: 'Discover and learn the key skills required for your chosen career path.',
+  },
+];
+
 const Dashboard = ({ user, onLogout }) => {
   const [activeView, setActiveView] = useState('home');
 
@@ -21,23 +42,28 @@ const Dashboard = ({ user, onLogout }) => {
       default:
         return (
           <div className="home-view">
-            <h1>Your Career Journey Starts Here</h1>
+            <header className="home-header">
+              <h1>Welcome back, {user?.name || 'Explorer'}!</h1>
+              <p>Your journey to a successful career continues here. What would you like to do today?</p>
+            </header>
             <div className="feature-cards-container">
-              <div className="feature-card" onClick={() => setActiveView('colleges')}>
-                <i className="fas fa-university"></i>
-                <h2>Explore Colleges</h2>
-                <p>Find details about Tier 1 and Tier 2 engineering colleges across India.</p>
-              </div>
-              <div className="feature-card" onClick={() => setActiveView('quiz')}>
-                <i className="fas fa-tasks"></i>
-                <h2>AI Career Path Explorer</h2>
-                <p>Answer 10 questions to get a personalized career recommendation.</p>
-              </div>
-              <div className="feature-card" onClick={() => setActiveView('skills')}>
-                <i className="fas fa-lightbulb"></i>
-                <h2>Skill Builder</h2>
-                <p>Discover and learn the key skills required for your chosen career path.</p>
-              </div>
+              {features.map((feature, index) => (
+                <div 
+                  key={feature.key} 
+                  className="feature-card" 
+                  onClick={() => setActiveView(feature.key)}
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <div className="card-icon">
+                    <i className={feature.icon}></i>
+                  </div>
+                  <div className="card-content">
+                    <h2>{feature.title}</h2>
+                    <p>{feature.description}</p>
+                  </div>
+                  <span className="card-arrow">&rarr;</span>
+                </div>
+              ))}
             </div>
           </div>
         );
@@ -46,7 +72,7 @@ const Dashboard = ({ user, onLogout }) => {
 
   return (
     <div className="dashboard-container">
-      <Sidebar setActiveView={setActiveView} />
+      <Sidebar activeView={activeView} setActiveView={setActiveView} />
       <Header user={user} onLogout={onLogout} />
       <main className="dashboard-main-content">
         {renderContent()}

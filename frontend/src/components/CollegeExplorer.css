@@ -1,43 +1,62 @@
-.college-explorer-container h2,
-.college-explorer-container h3 {
-    color: var(--white);
-}
+.college-explorer-container { width: 100%; animation: fadeIn 0.5s ease-out; }
+.college-explorer-header { text-align: center; margin: 0 auto 3rem auto; }
+.explorer-title { font-size: 2.25rem; font-weight: 700; color: var(--text-primary); }
 
-.college-section {
-  margin-bottom: 2rem;
+.college-section { margin-bottom: 3rem; }
+.college-section h3 {
+  color: var(--text-primary);
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--surface-accent);
+  display: inline-block;
 }
 
 .college-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
 }
 
 .college-card {
-  background-color: var(--dark-secondary);
-  padding: 1.5rem;
-  border-radius: 12px;
-  border: 1px solid rgba(102, 252, 241, 0.2);
+  background: var(--background-secondary);
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  opacity: 0;
+  animation: slideUp 0.5s ease-out forwards;
 }
-
 .college-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  transform: translateY(-8px);
+  box-shadow: 0 10px 30px var(--shadow-color);
 }
 
-.college-card h3 {
-  color: var(--primary-accent);
-}
+.card-content { flex-grow: 1; }
+.college-card h3 { color: var(--text-primary); font-size: 1.5rem; font-weight: 600; margin-bottom: 0.75rem; }
+.college-card p { color: var(--text-secondary); display: flex; align-items: center; gap: 0.5rem; font-size: 1rem; }
 
-.college-card p {
-    color: var(--light-text);
-}
-
-.college-card a {
+.btn-visit {
   display: inline-block;
-  margin-top: 1rem;
+  text-align: center;
   text-decoration: none;
-  color: var(--primary-accent);
+  margin-top: 1.5rem;
+  padding: 12px 24px;
+  border-radius: 10px;
   font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  background-color: var(--primary-accent);
+  color: var(--text-primary);
+  box-shadow: 0 4px 15px var(--shadow-color);
+  transition: all 0.3s ease;
 }
+.btn-visit:hover {
+  background-color: var(--highlight-accent);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px var(--shadow-color);
+}
+.btn-visit i { margin-left: 0.5rem; }
