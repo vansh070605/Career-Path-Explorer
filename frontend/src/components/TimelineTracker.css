@@ -1,0 +1,117 @@
+/* --- Main Container & Header --- */
+.timeline-container {
+  width: 100%;
+  animation: fadeIn 0.5s ease-out;
+}
+.timeline-header { text-align: center; max-width: 800px; margin: 0 auto 2rem auto; }
+.timeline-header h2 { font-size: 2.25rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem; }
+.timeline-header p { font-size: 1.1rem; color: var(--text-secondary); line-height: 1.6; }
+
+/* --- Controls Section --- */
+.timeline-controls {
+    display: flex; justify-content: space-between; align-items: center;
+    margin: 0 auto 3rem auto; max-width: 900px; flex-wrap: wrap; gap: 1rem;
+}
+.filter-buttons {
+    display: flex; gap: 0.75rem; background-color: var(--surface-accent);
+    padding: 0.5rem; border-radius: 12px;
+}
+.filter-buttons button {
+    padding: 10px 20px; border: none; border-radius: 8px; font-weight: 600;
+    font-size: 0.9rem; cursor: pointer; background-color: transparent;
+    color: var(--text-secondary); transition: all 0.3s ease;
+}
+.filter-buttons button:hover { background-color: var(--background-secondary); color: var(--text-primary); }
+.filter-buttons button.active { background-color: var(--primary-accent); color: var(--text-primary); box-shadow: 0 4px 15px var(--shadow-color); }
+
+.search-box-container { position: relative; display: flex; align-items: center; }
+.search-box-container i { position: absolute; left: 15px; color: var(--text-secondary); }
+.search-box {
+    padding: 12px 15px 12px 40px; background-color: var(--background-secondary);
+    border: 2px solid var(--border-color); border-radius: 10px; color: var(--text-primary);
+    font-size: 1rem; width: 100%; min-width: 280px;
+}
+
+/* --- Vertical Timeline Layout --- */
+.timeline {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+}
+.timeline::after {
+    content: ''; position: absolute; width: 4px; background-color: var(--surface-accent);
+    top: 0; bottom: 0; left: 50%; margin-left: -2px; z-index: 0;
+}
+.timeline-item {
+    padding: 10px 40px; position: relative; width: 50%;
+    opacity: 0; animation: slideUp 0.6s ease-out forwards;
+}
+.timeline-item.left { left: 0; }
+.timeline-item.right { left: 50%; }
+
+.timeline-dot {
+    content: ''; position: absolute; width: 20px; height: 20px;
+    background-color: var(--background-secondary); border: 4px solid var(--primary-accent);
+    top: 30px; border-radius: 50%; z-index: 1;
+}
+.timeline-item.left .timeline-dot { right: -10px; }
+.timeline-item.right .timeline-dot { left: -10px; }
+
+/* --- Redesigned Event Card --- */
+.event-card {
+    background: var(--background-secondary); padding: 1.5rem 2rem; border-radius: 20px;
+    border: 1px solid var(--border-color); box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    position: relative; transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.timeline-item:hover .event-card {
+    transform: translateY(-5px); box-shadow: 0 10px 30px var(--shadow-color);
+}
+
+.status-tag {
+  font-size: 0.85rem; font-weight: 700; padding: 4px 10px;
+  border-radius: 8px; color: #fff; margin-bottom: 1rem; display: inline-block;
+}
+.status-tag.active { background-color: #48bb78; box-shadow: 0 0 15px #48bb78a0; }
+.status-tag.upcoming { background-color: #4299e1; }
+.status-tag.closed { background-color: #f56565; }
+
+.category-chip { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-bottom: 0.75rem; }
+.category-chip.scholarship { background-color: #f6e05e; color: #744210; }
+.category-chip.entrance-exam { background-color: #c6f6d5; color: #22543d; }
+.category-chip.admission { background-color: #bee3f8; color: #2c5282; }
+
+.event-card h3 { font-size: 1.25rem; font-weight: 600; color: var(--text-primary); margin: 0 0 0.25rem 0; }
+.event-card p { font-size: 0.9rem; color: var(--text-secondary); margin: 0; }
+.event-card p i { margin-right: 0.5rem; }
+
+.event-actions { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+.countdown { display: flex; gap: 0.75rem; }
+.countdown-item { text-align: center; }
+.countdown-value { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); background-color: var(--background-primary); padding: 0.25rem 0.5rem; border-radius: 6px; min-width: 40px; }
+.countdown-label { font-size: 0.7rem; text-transform: uppercase; color: var(--text-secondary); margin-top: 0.25rem; }
+
+.btn-apply { display: inline-flex; align-items: center; text-decoration: none; padding: 10px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; background-color: var(--primary-accent); color: var(--text-primary); box-shadow: 0 4px 15px var(--shadow-color); transition: all 0.3s ease; }
+.btn-apply:hover { background-color: var(--highlight-accent); transform: translateY(-2px); box-shadow: 0 6px 20px var(--shadow-color); }
+.btn-apply i { margin-left: 0.5rem; }
+
+/* --- Loading, Error, and Message Styles --- */
+.loading-spinner, .error-container, .no-events-message {
+    text-align: center; padding: 4rem 2rem; background-color: var(--background-secondary); border-radius: 20px;
+}
+.loading-spinner div { width: 18px; height: 18px; background-color: var(--primary-accent); border-radius: 100%; display: inline-block; animation: sk-bouncedelay 1.4s infinite ease-in-out both; }
+.loading-spinner div:nth-child(1) { animation-delay: -0.32s; }
+.loading-spinner div:nth-child(2) { animation-delay: -0.16s; }
+@keyframes sk-bouncedelay { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1.0); } }
+
+.error-container { background-color: #fff5f5; border: 1px solid #e53e3e; }
+.error-message { color: #c53030; font-weight: 600; }
+.btn-retry { margin-top: 1rem; padding: 10px 20px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; background-color: #f6e05e; color: #744210; transition: background-color 0.3s ease; }
+.btn-retry:hover { background-color: #ecc94b; }
+.no-events-message p { font-size: 1.2rem; color: var(--text-secondary); }
+
+@media (max-width: 768px) {
+    .timeline::after { left: 20px; }
+    .timeline-item { width: 100%; padding-left: 50px; padding-right: 10px; }
+    .timeline-item.left, .timeline-item.right { left: 0; }
+    .timeline-item.left .timeline-dot, .timeline-item.right .timeline-dot { left: 10px; }
+}

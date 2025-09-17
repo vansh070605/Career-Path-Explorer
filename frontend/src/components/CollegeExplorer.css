@@ -1,7 +1,47 @@
-.college-explorer-container { width: 100%; animation: fadeIn 0.5s ease-out; }
-.college-explorer-header { text-align: center; margin: 0 auto 3rem auto; }
-.explorer-title { font-size: 2.25rem; font-weight: 700; color: var(--text-primary); }
+/* --- Main Container & Header --- */
+.college-explorer-container {
+  width: 100%;
+  animation: fadeIn 0.5s ease-out;
+  /* NEW: Subtle background pattern */
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d7e3fc' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
 
+.college-explorer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto 3rem auto;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.explorer-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  flex-shrink: 0;
+}
+
+/* --- Dropdown Styles --- */
+.state-dropdown {
+  padding: 12px 15px;
+  background-color: var(--background-secondary);
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  font-weight: 600;
+  min-width: 250px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.state-dropdown:focus {
+  outline: none;
+  border-color: var(--primary-accent);
+  box-shadow: 0 0 15px var(--shadow-color);
+}
+
+/* --- Section & List Styles --- */
 .college-section { margin-bottom: 3rem; }
 .college-section h3 {
   color: var(--text-primary);
@@ -15,48 +55,102 @@
 
 .college-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
 }
 
+/* --- Card Styles --- */
 .college-card {
   background: var(--background-secondary);
   border-radius: 20px;
   border: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
-  padding: 2rem;
+  padding: 1.5rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   opacity: 0;
   animation: slideUp 0.5s ease-out forwards;
+  position: relative;
+  overflow: hidden;
 }
-.college-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 10px 30px var(--shadow-color);
+.college-card:hover { transform: translateY(-8px); box-shadow: 0 10px 30px var(--shadow-color); }
+
+/* --- NEW: Tier-1 Featured Card Style --- */
+.tier-1-card {
+    border: 2px solid transparent;
+    background-image: linear-gradient(white, white), 
+                      linear-gradient(to right, var(--highlight-accent), var(--primary-accent));
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
 }
+
+.featured-tag {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: linear-gradient(to right, var(--highlight-accent), var(--primary-accent));
+    color: var(--text-primary);
+    padding: 6px 14px 8px 20px;
+    border-radius: 0 0 0 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
 
 .card-content { flex-grow: 1; }
-.college-card h3 { color: var(--text-primary); font-size: 1.5rem; font-weight: 600; margin-bottom: 0.75rem; }
-.college-card p { color: var(--text-secondary); display: flex; align-items: center; gap: 0.5rem; font-size: 1rem; }
+.college-card h3 { color: var(--text-primary); font-size: 1.25rem; font-weight: 600; margin-bottom: 0.25rem; }
+.college-card p { color: var(--text-secondary); display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; }
 
+/* --- Rankings inside Card --- */
+.rankings-container {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.ranking-item {
+    display: flex; justify-content: space-between; align-items: center;
+    background-color: var(--background-primary); padding: 0.5rem 0.75rem;
+    border-radius: 8px; font-size: 0.8rem;
+}
+.ranking-field { font-weight: 600; color: var(--text-primary); text-transform: capitalize; }
+.ranking-score { color: var(--text-secondary); }
+
+/* --- Visit Button --- */
 .btn-visit {
-  display: inline-block;
-  text-align: center;
-  text-decoration: none;
-  margin-top: 1.5rem;
-  padding: 12px 24px;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  background-color: var(--primary-accent);
-  color: var(--text-primary);
-  box-shadow: 0 4px 15px var(--shadow-color);
+  display: inline-block; text-align: center; text-decoration: none; margin-top: 1.5rem;
+  padding: 10px 15px; border-radius: 10px; font-weight: 600;
+  font-size: 0.9rem; cursor: pointer; background-color: var(--primary-accent);
+  color: var(--text-primary); box-shadow: 0 4px 15px var(--shadow-color);
   transition: all 0.3s ease;
 }
 .btn-visit:hover {
-  background-color: var(--highlight-accent);
-  transform: translateY(-3px);
+  background-color: var(--highlight-accent); transform: translateY(-2px);
   box-shadow: 0 6px 20px var(--shadow-color);
 }
 .btn-visit i { margin-left: 0.5rem; }
+
+/* --- Loading, Error, and Message Styles --- */
+.loading-spinner, .error-container, .no-colleges-message {
+    text-align: center; padding: 4rem 2rem; background-color: var(--background-secondary); border-radius: 20px;
+}
+.loading-spinner div {
+  width: 18px; height: 18px; background-color: var(--primary-accent);
+  border-radius: 100%; display: inline-block;
+  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+.loading-spinner div:nth-child(1) { animation-delay: -0.32s; }
+.loading-spinner div:nth-child(2) { animation-delay: -0.16s; }
+@keyframes sk-bouncedelay { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1.0); } }
+
+.error-container { background-color: #fff5f5; border: 1px solid #e53e3e; }
+.error-message { color: #c53030; font-weight: 600; }
+.btn-retry {
+    margin-top: 1rem; padding: 10px 20px; border: none;
+    border-radius: 8px; font-weight: 600; cursor: pointer;
+    background-color: #f6e05e; color: #744210;
+    transition: background-color 0.3s ease;
+}
+.btn-retry:hover { background-color: #ecc94b; }
+
+.no-colleges-message p { font-size: 1.2rem; color: var(--text-secondary); }

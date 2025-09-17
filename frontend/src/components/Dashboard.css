@@ -156,3 +156,69 @@
   transition: all 0.3s ease;
 }
 .feature-card:hover .card-arrow { opacity: 1; transform: translateX(0); }
+
+/* --- Add these styles to Dashboard.css --- */
+
+.personalized-section {
+  margin-bottom: 3rem;
+}
+.personalized-section h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--surface-accent);
+  display: inline-block;
+}
+
+.recommendation-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.rec-card {
+  background: var(--background-secondary);
+  padding: 1.5rem;
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.rec-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 30px var(--shadow-color);
+  border-color: var(--highlight-accent);
+}
+.rec-card i {
+  font-size: 2rem;
+  color: var(--primary-accent);
+  margin-bottom: 1rem;
+}
+.rec-card h4 {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.rec-card p {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0.25rem 0 0 0;
+}
+.rec-card span {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--primary-accent);
+  transition: color 0.3s ease;
+}
+.rec-card:hover span {
+  color: var(--highlight-accent);
+}

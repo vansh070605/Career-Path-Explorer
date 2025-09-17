@@ -4,40 +4,65 @@ import Sidebar from './Sidebar';
 import CollegeExplorer from './CollegeExplorer';
 import CareerQuiz from './CareerQuiz';
 import SkillBuilder from './SkillBuilder';
+import CareerPathVisualizer from './CareerPathVisualizer';
+import TimelineTracker from './TimelineTracker'; // 1. Import the new component
 import './Dashboard.css';
 
+// 2. Add Timeline Tracker to the feature cards
 const features = [
   {
     key: 'colleges',
     icon: 'fas fa-university',
     title: 'Explore Colleges',
-    description: 'Find details about Tier 1 and Tier 2 engineering colleges across India.',
+    description: 'Search and filter colleges across India by state and rank.',
   },
   {
     key: 'quiz',
     icon: 'fas fa-tasks',
     title: 'AI Career Path Explorer',
-    description: 'Answer 10 questions to get a personalized career recommendation.',
+    description: 'Answer questions to get a personalized career recommendation.',
   },
   {
     key: 'skills',
     icon: 'fas fa-lightbulb',
     title: 'Skill Builder',
-    description: 'Discover and learn the key skills required for your chosen career path.',
+    description: 'Discover the key skills required for your chosen career path.',
+  },
+  {
+    key: 'visualizer',
+    icon: 'fas fa-project-diagram',
+    title: 'Career Visualizer',
+    description: 'Visually explore the connections between subjects, degrees, and careers.',
+  },
+  {
+    key: 'timeline', // Added this new feature
+    icon: 'fas fa-calendar-alt',
+    title: 'Timeline Tracker',
+    description: 'Stay updated on all important admission and scholarship dates.',
   },
 ];
 
 const Dashboard = ({ user, onLogout }) => {
   const [activeView, setActiveView] = useState('home');
 
+  const handleQuizComplete = (result) => {
+    // Logic for personalized dashboard would go here
+    setActiveView('home');
+  };
+
   const renderContent = () => {
     switch (activeView) {
       case 'colleges':
         return <CollegeExplorer />;
       case 'quiz':
-        return <CareerQuiz />;
+        return <CareerQuiz onQuizComplete={handleQuizComplete} />;
       case 'skills':
         return <SkillBuilder />;
+      case 'visualizer':
+        return <CareerPathVisualizer />;
+      // 3. Add the new case to render the Timeline Tracker
+      case 'timeline':
+        return <TimelineTracker />;
       case 'home':
       default:
         return (
@@ -54,9 +79,7 @@ const Dashboard = ({ user, onLogout }) => {
                   onClick={() => setActiveView(feature.key)}
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <div className="card-icon">
-                    <i className={feature.icon}></i>
-                  </div>
+                  <div className="card-icon"><i className={feature.icon}></i></div>
                   <div className="card-content">
                     <h2>{feature.title}</h2>
                     <p>{feature.description}</p>

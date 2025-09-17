@@ -20,6 +20,12 @@ const Sidebar = ({ setActiveView }) => {
           <li onClick={() => setActiveView('skills')}>
             <i className="fas fa-lightbulb"></i> Skill Builder
           </li>
+          <li onClick={() => setActiveView('visualizer')}>
+            <i className="fas fa-project-diagram"></i> Career Visualizer
+          </li>
+          <li onClick={() => setActiveView('timeline')}>
+            <i className="fas fa-calendar-alt"></i> Timeline Tracker
+          </li>
         </ul>
       </nav>
     </aside>
