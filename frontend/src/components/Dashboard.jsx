@@ -7,46 +7,46 @@ import SkillBuilder from './SkillBuilder';
 import CareerPathVisualizer from './CareerPathVisualizer';
 import TimelineTracker from './TimelineTracker'; // 1. Import the new component
 import './Dashboard.css';
-
-// 2. Add Timeline Tracker to the feature cards
-const features = [
-  {
-    key: 'colleges',
-    icon: 'fas fa-university',
-    title: 'Explore Colleges',
-    description: 'Search and filter colleges across India by state and rank.',
-  },
-  {
-    key: 'quiz',
-    icon: 'fas fa-tasks',
-    title: 'AI Career Path Explorer',
-    description: 'Answer questions to get a personalized career recommendation.',
-  },
-  {
-    key: 'skills',
-    icon: 'fas fa-lightbulb',
-    title: 'Skill Builder',
-    description: 'Discover the key skills required for your chosen career path.',
-  },
-  {
-    key: 'visualizer',
-    icon: 'fas fa-project-diagram',
-    title: 'Career Visualizer',
-    description: 'Visually explore the connections between subjects, degrees, and careers.',
-  },
-  {
-    key: 'timeline', // Added this new feature
-    icon: 'fas fa-calendar-alt',
-    title: 'Timeline Tracker',
-    description: 'Stay updated on all important admission and scholarship dates.',
-  },
-];
+import { useTranslation } from 'react-i18next';
 
 const Dashboard = ({ user, onLogout }) => {
   const [activeView, setActiveView] = useState('home');
+  const { t } = useTranslation();
+
+  const features = [
+    {
+      key: 'colleges',
+      icon: 'fas fa-university',
+      title: t('common.exploreColleges'),
+      description: t('dashboard.exploreCollegesDesc', 'Search and filter colleges across India by state and rank.'),
+    },
+    {
+      key: 'quiz',
+      icon: 'fas fa-tasks',
+      title: t('common.aiCareerQuiz'),
+      description: t('dashboard.aiCareerQuizDesc', 'Answer questions to get a personalized career recommendation.'),
+    },
+    {
+      key: 'skills',
+      icon: 'fas fa-lightbulb',
+      title: t('common.skillBuilder'),
+      description: t('dashboard.skillBuilderDesc', 'Discover the key skills required for your chosen career path.'),
+    },
+    {
+      key: 'visualizer',
+      icon: 'fas fa-project-diagram',
+      title: t('common.careerVisualizer'),
+      description: t('dashboard.careerVisualizerDesc', 'Visually explore the connections between subjects, degrees, and careers.'),
+    },
+    {
+      key: 'timeline',
+      icon: 'fas fa-calendar-alt',
+      title: t('common.timelineTracker'),
+      description: t('dashboard.timelineTrackerDesc', 'Stay updated on all important admission and scholarship dates.'),
+    },
+  ];
 
   const handleQuizComplete = (result) => {
-    // Logic for personalized dashboard would go here
     setActiveView('home');
   };
 
@@ -60,7 +60,6 @@ const Dashboard = ({ user, onLogout }) => {
         return <SkillBuilder />;
       case 'visualizer':
         return <CareerPathVisualizer />;
-      // 3. Add the new case to render the Timeline Tracker
       case 'timeline':
         return <TimelineTracker />;
       case 'home':
@@ -68,8 +67,8 @@ const Dashboard = ({ user, onLogout }) => {
         return (
           <div className="home-view">
             <header className="home-header">
-              <h1>Welcome back, {user?.name || 'Explorer'}!</h1>
-              <p>Your journey to a successful career continues here. What would you like to do today?</p>
+              <h1>{t('dashboard.welcomeBackUser', { name: user?.name || 'Explorer' })}</h1>
+              <p>{t('dashboard.welcomeSub', 'Your journey to a successful career continues here. What would you like to do today?')}</p>
             </header>
             <div className="feature-cards-container">
               {features.map((feature, index) => (

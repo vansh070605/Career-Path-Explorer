@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import './LandingPage.css';
+import { useTranslation } from 'react-i18next';
 
 const LandingPage = ({ onLogin }) => {
   const [isSignInActive, setIsSignInActive] = useState(true);
+  const { t } = useTranslation();
 
   const handleAuth = (e, type) => {
     e.preventDefault();
@@ -15,49 +17,49 @@ const LandingPage = ({ onLogin }) => {
     <div className={`landing-container ${isSignInActive ? '' : 'right-panel-active'}`}>
       <div className="form-container sign-up-container">
         <form onSubmit={(e) => handleAuth(e, 'register')}>
-          <h1>Create Account</h1>
+          <h1>{t('landing.createAccount')}</h1>
           <div className="social-container">
             <a href="#" className="social"><i className="fab fa-google-plus-g"></i></a>
             <a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
             <a href="#" className="social"><i className="fab fa-github"></i></a>
             <a href="#" className="social"><i className="fab fa-linkedin-in"></i></a>
           </div>
-          <span>or use your email for registration</span>
-          <input type="text" name="name" placeholder="Name" required />
-          <input type="email" name="email" placeholder="Email" required />
-          <input type="password" name="password" placeholder="Password" required />
-          <button type="submit">Sign Up</button>
+          <span>{t('landing.orUseEmail')}</span>
+          <input type="text" name="name" placeholder={t('landing.name')} required />
+          <input type="email" name="email" placeholder={t('landing.email')} required />
+          <input type="password" name="password" placeholder={t('landing.password')} required />
+          <button type="submit">{t('landing.signUp')}</button>
         </form>
       </div>
 
       <div className="form-container sign-in-container">
         <form onSubmit={(e) => handleAuth(e, 'login')}>
-          <h1>Sign in</h1>
+          <h1>{t('landing.signInTitle')}</h1>
           <div className="social-container">
             <a href="#" className="social"><i className="fab fa-google-plus-g"></i></a>
             <a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
             <a href="#" className="social"><i className="fab fa-github"></i></a>
             <a href="#" className="social"><i className="fab fa-linkedin-in"></i></a>
           </div>
-          <span>or use your account</span>
-          <input type="email" name="email" placeholder="Email" required />
-          <input type="password" name="password" placeholder="Password" required />
-          <a href="#">Forgot your password?</a>
-          <button type="submit">Sign In</button>
+          <span>{t('landing.orUseAccount')}</span>
+          <input type="email" name="email" placeholder={t('landing.email')} required />
+          <input type="password" name="password" placeholder={t('landing.password')} required />
+          <a href="#">{t('landing.forgotPassword')}</a>
+          <button type="submit">{t('landing.signIn')}</button>
         </form>
       </div>
 
       <div className="overlay-container">
         <div className="overlay">
           <div className="overlay-panel overlay-left">
-            <h1>Welcome Back!</h1>
-            <p>To keep connected with us please login with your personal info</p>
-            <button className="ghost" onClick={() => setIsSignInActive(true)}>Sign In</button>
+            <h1>{t('landing.welcomeBack')}</h1>
+            <p>{t('landing.keepConnected')}</p>
+            <button className="ghost" onClick={() => setIsSignInActive(true)}>{t('landing.signIn')}</button>
           </div>
           <div className="overlay-panel overlay-right">
-            <h1>Hello, Friend!</h1>
-            <p>Enter your personal details and start your journey with us</p>
-            <button className="ghost" onClick={() => setIsSignInActive(false)}>Sign Up</button>
+            <h1>{t('landing.helloFriend')}</h1>
+            <p>{t('landing.startJourney')}</p>
+            <button className="ghost" onClick={() => setIsSignInActive(false)}>{t('landing.signUp')}</button>
           </div>
         </div>
       </div>

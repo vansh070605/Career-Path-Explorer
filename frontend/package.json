@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "elkjs": "^0.11.0",
+    "i18next": "^25.5.2",
     "prop-types": "^15.8.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-i18next": "^15.7.3",
     "reactflow": "^11.11.4"
   },
   "devDependencies": {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import './TimelineTracker.css';
+import { useTranslation } from 'react-i18next';
 
 // --- REAL-TIME DATA (as of late 2024 for the 2025 academic year) ---
 // This array is now populated with the most current, real-world dates.
@@ -49,16 +50,17 @@ const realTimeEventsData = [
 ];
 
 // --- Helper Components ---
-const getEventStatus = (date) => {
+const getEventStatus = (date, t) => {
     const now = new Date();
     const eventDate = new Date(date);
     const thirtyDaysFromNow = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
-    if (eventDate < now) return { text: 'Closed', priority: 3 };
-    if (eventDate <= thirtyDaysFromNow) return { text: 'Active', priority: 1 };
-    return { text: 'Upcoming', priority: 2 };
+    if (eventDate < now) return { text: t('timeline.status.closed'), priority: 3 };
+    if (eventDate <= thirtyDaysFromNow) return { text: t('timeline.status.active'), priority: 1 };
+    return { text: t('timeline.status.upcoming'), priority: 2 };
 };
 
 const TimeLeft = ({ date }) => {
+  const { i18n } = useTranslation();
   const calculateTimeLeft = useCallback(() => {
     const difference = +new Date(date) - +new Date();
     if (difference <= 0) return {};
@@ -93,6 +95,7 @@ const TimeLeft = ({ date }) => {
 
 // --- Main TimelineTracker Component ---
 const TimelineTracker = () => {
+    const { t, i18n } = useTranslation();
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -107,16 +110,16 @@ const TimelineTracker = () => {
             
             const dataWithStatus = realTimeEventsData.map(event => ({
                 ...event,
-                status: getEventStatus(event.date),
+                status: getEventStatus(event.date, t),
             }));
             setEvents(dataWithStatus);
 
         } catch (err) {
-            setError('Could not fetch events. Please try again later.');
+            setError(t('timeline.errorFetch'));
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [t]);
 
     useEffect(() => {
         fetchEvents();
@@ -135,23 +138,23 @@ const TimelineTracker = () => {
   return (
     <div className="timeline-container">
       <div className="timeline-header">
-        <h2>Admissions & Scholarship Timeline</h2>
-        <p>Stay updated with all the important upcoming deadlines for exams, admissions, and scholarships.</p>
+        <h2>{t('timeline.title')}</h2>
+        <p>{t('timeline.subtitle')}</p>
       </div>
 
       <div className="timeline-controls">
         <div className="filter-buttons">
-            <button className={filter === 'All' ? 'active' : ''} onClick={() => setFilter('All')}>All</button>
-            <button className={filter === 'Entrance Exam' ? 'active' : ''} onClick={() => setFilter('Entrance Exam')}>Exams</button>
-            <button className={filter === 'Scholarship' ? 'active' : ''} onClick={() => setFilter('Scholarship')}>Scholarships</button>
-            <button className={filter === 'Admission' ? 'active' : ''} onClick={() => setFilter('Admission')}>Admissions</button>
+            <button className={filter === 'All' ? 'active' : ''} onClick={() => setFilter('All')}>{t('timeline.filters.all')}</button>
+            <button className={filter === 'Entrance Exam' ? 'active' : ''} onClick={() => setFilter('Entrance Exam')}>{t('timeline.filters.exams')}</button>
+            <button className={filter === 'Scholarship' ? 'active' : ''} onClick={() => setFilter('Scholarship')}>{t('timeline.filters.scholarships')}</button>
+            <button className={filter === 'Admission' ? 'active' : ''} onClick={() => setFilter('Admission')}>{t('timeline.filters.admissions')}</button>
         </div>
         <div className="search-box-container">
             <i className="fas fa-search"></i>
             <input
                 type="text"
                 className="search-box"
-                placeholder="Search for an event..."
+                placeholder={t('timeline.searchPlaceholder')}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -166,7 +169,7 @@ const TimelineTracker = () => {
             <div className="error-container">
                 <p className="error-message">{error}</p>
                 <button className="btn-retry" onClick={fetchEvents}>
-                    <i className="fas fa-redo"></i> Retry
+                    <i className="fas fa-redo"></i> {t('common.retry')}
                 </button>
             </div>
         )}
@@ -180,12 +183,12 @@ const TimelineTracker = () => {
                       <div className="event-details">
                           <span className={`category-chip ${event.category.toLowerCase().replace(' ', '-')}`}>{event.category}</span>
                           <h3>{event.title}</h3>
-                          <p><i className="fas fa-calendar-day"></i> Deadline: {new Date(event.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+                          <p><i className="fas fa-calendar-day"></i> {t('timeline.deadlineLabel')} {new Date(event.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
                       </div>
                       <div className="event-actions">
                           <TimeLeft date={event.date} />
                           <a href={event.link} target="_blank" rel="noopener noreferrer" className="btn-apply">
-                          View Details <i className="fas fa-external-link-alt"></i>
+                          {t('common.viewDetails')} <i className="fas fa-external-link-alt"></i>
                           </a>
                       </div>
                     </div>
@@ -193,7 +196,7 @@ const TimelineTracker = () => {
                 ))
             ) : (
                 <div className="no-events-message">
-                    <p>No events found for your current search or filter.</p>
+                    <p>{t('timeline.noEvents')}</p>
                 </div>
             )
         )}

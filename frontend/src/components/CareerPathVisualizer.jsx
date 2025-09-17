@@ -3,6 +3,7 @@ import ReactFlow, { MiniMap, Controls, Background, useNodesState, useEdgesState,
 import { getLayoutedElements } from './layout.js';
 import 'reactflow/dist/style.css';
 import './CareerPathVisualizer.css';
+import { useTranslation } from 'react-i18next';
 
 // --- Custom Node with Icon ---
 const IconNode = ({ data }) => (
@@ -48,6 +49,7 @@ const fullDataset = {
 
 // --- Side Panel Component ---
 const SidePanel = ({ node, onClose }) => {
+    const { t } = useTranslation();
     if (!node) return null;
     return (
         <div className="side-panel">
@@ -58,7 +60,6 @@ const SidePanel = ({ node, onClose }) => {
                     <h3>{node.data.label}</h3>
                 </div>
                 <p>{node.data.description}</p>
-                {/* Future enhancement: Link to other parts of the app */}
             </div>
         </div>
     );
@@ -66,6 +67,7 @@ const SidePanel = ({ node, onClose }) => {
 
 
 const CareerPathVisualizer = () => {
+  const { t } = useTranslation();
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [selectedNode, setSelectedNode] = useState(null);
@@ -80,7 +82,6 @@ const CareerPathVisualizer = () => {
 
   const onNodeMouseEnter = useCallback((event, node) => {
     setEdges(prevEdges => prevEdges.map(edge => {
-        // Find upstream and downstream connections
         if (edge.source === node.id || edge.target === node.id) {
             return { ...edge, animated: true, style: { ...edge.style, stroke: 'var(--highlight-accent)', strokeWidth: 3 } };
         }
@@ -99,8 +100,8 @@ const CareerPathVisualizer = () => {
   return (
     <div className="visualizer-container">
       <div className="visualizer-header">
-        <h2>Dynamic Career Path Visualizer</h2>
-        <p>Hover over a node to highlight its path. Click to learn more!</p>
+        <h2>{t('visualizer.title')}</h2>
+        <p>{t('visualizer.subtitle')}</p>
       </div>
       <div className="visualizer-wrapper">
         <ReactFlow
@@ -115,9 +116,9 @@ const CareerPathVisualizer = () => {
           fitView
         >
           <div className="visualizer-legend">
-            <div className="legend-item"><span className="color-box subjects"></span>Subjects</div>
-            <div className="legend-item"><span className="color-box degrees"></span>Degrees</div>
-            <div className="legend-item"><span className="color-box careers"></span>Careers</div>
+            <div className="legend-item"><span className="color-box subjects"></span>{t('visualizer.legendSubjects')}</div>
+            <div className="legend-item"><span className="color-box degrees"></span>{t('visualizer.legendDegrees')}</div>
+            <div className="legend-item"><span className="color-box careers"></span>{t('visualizer.legendCareers')}</div>
           </div>
           <Controls />
           <Background variant="dots" gap={24} size={1} />
