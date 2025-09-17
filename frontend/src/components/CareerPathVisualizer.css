@@ -1,79 +1,134 @@
 /* --- Main Container & Header --- */
 .visualizer-container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  animation: fadeIn 0.5s ease-out;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    animation: fadeIn 0.5s ease-out;
+    background-color: var(--background-primary, #f8f9fa); /* Fallback background */
 }
-.visualizer-header { text-align: center; margin-bottom: 2rem; flex-shrink: 0; }
-.visualizer-header h2 { font-size: 2.25rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem; }
-.visualizer-header p { font-size: 1.1rem; color: var(--text-secondary); line-height: 1.6; }
+.visualizer-header {
+    text-align: center;
+    padding: 1rem 0;
+    margin-bottom: 1.5rem;
+    flex-shrink: 0;
+}
+.visualizer-header h2 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--text-primary, #212529);
+    margin-bottom: 0.5rem;
+}
+.visualizer-header p {
+    font-size: 1.1rem;
+    color: var(--text-secondary, #6c757d);
+    line-height: 1.6;
+}
 
 /* --- Wrapper for Flow and Side Panel --- */
 .visualizer-wrapper {
-  flex-grow: 1; height: 75vh; border-radius: 20px;
-  border: 1px solid var(--border-color); overflow: hidden; 
-  position: relative;
+    flex-grow: 1;
+    height: 75vh;
+    border-radius: 16px;
+    border: 1px solid var(--border-color, #dee2e6);
+    overflow: hidden; 
+    position: relative;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.05);
 }
 
 /* --- Legend Styles --- */
 .visualizer-legend {
-    position: absolute; top: 15px; right: 15px;
-    background-color: rgba(255, 255, 255, 0.9); backdrop-filter: blur(5px);
-    padding: 10px 15px; border-radius: 10px;
-    border: 1px solid var(--border-color); z-index: 10;
-    display: flex; gap: 15px;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    padding: 10px 15px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color, #dee2e6);
+    z-index: 10;
+    display: flex;
+    gap: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
-.legend-item { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 0.9rem; color: var(--text-primary); }
-.color-box { width: 15px; height: 15px; border-radius: 4px; border: 1px solid var(--border-color); }
-.color-box.subjects { background-color: var(--surface-accent); }
-.color-box.degrees { background-color: var(--background-secondary); }
-.color-box.careers { background-color: var(--highlight-accent); }
+.legend-item { display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 0.9rem; color: var(--text-secondary, #495057); }
+.color-box { width: 15px; height: 15px; border-radius: 4px; border: 1px solid rgba(0,0,0,0.1); }
+.color-box.subjects { background: var(--surface-accent, #e7f5ff); }
+.color-box.degrees { background: var(--background-secondary, #ffffff); }
+.color-box.careers { background: var(--highlight-accent-light, #d0bfff); }
 
-/* --- Custom React Flow Styles --- */
+/* --- Base React Flow Node Styles --- */
 .react-flow .react-flow__node {
-  border-radius: 12px; font-family: var(--font-family);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.07); cursor: pointer;
-  transition: all 0.3s ease; width: 220px;
-  border: 2px solid var(--border-color);
-  padding: 0;
+    border-radius: 12px;
+    font-family: var(--font-family, 'Inter', sans-serif);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    min-width: 200px;
+    border: 2px solid transparent;
+    padding: 0;
+    background: var(--background-secondary, #ffffff);
 }
 .react-flow .react-flow__node:hover {
-    transform: translateY(-4px);
-    border-color: var(--highlight-accent);
-    box-shadow: 0 8px 25px var(--shadow-color);
+    transform: translateY(-5px) scale(1.03);
+    border-color: var(--highlight-accent, #7c5cbf);
+    box-shadow: 0 8px 25px var(--shadow-color, rgba(124, 92, 191, 0.2));
 }
 
-/* --- Custom Node with Icon Styles --- */
-.icon-node {
-    display: flex; align-items: center; gap: 12px;
-    padding: 12px 15px;
+/* --- Node Type Specific Styles --- */
+.react-flow .react-flow__node-input {
+    background: linear-gradient(135deg, var(--surface-accent, #e7f5ff), #fff);
+    border-left: 5px solid var(--primary-accent, #339af0);
 }
-.node-icon { font-size: 1.5rem; color: var(--text-primary); width: 30px; text-align: center; }
-.node-label { font-weight: 600; font-size: 1rem; white-space: normal; color: var(--text-primary); }
-
+.react-flow .react-flow__node-output {
+    background: linear-gradient(135deg, var(--highlight-accent-light, #e9d5ff), #fff);
+    border-right: 5px solid var(--highlight-accent, #7c5cbf);
+}
 .react-flow .react-flow__node.selected {
-    border-color: var(--highlight-accent);
-    box-shadow: 0 0 0 3px var(--highlight-accent);
+    border-color: var(--highlight-accent, #7c5cbf);
+    box-shadow: 0 0 0 3px var(--highlight-accent-light, rgba(124, 92, 191, 0.3));
 }
 
-.react-flow .react-flow__node-input { background-color: var(--surface-accent); }
-.react-flow .react-flow__node-output { background-color: var(--highlight-accent); }
+/* --- Custom Node Content --- */
+.icon-node {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 18px;
+}
+.node-icon { font-size: 1.5rem; color: var(--text-primary, #343a40); width: 30px; text-align: center; }
+.node-label { font-weight: 600; font-size: 1rem; color: var(--text-primary, #343a40); }
 
-.react-flow .react-flow__edge-path { stroke: var(--text-secondary); stroke-width: 2; transition: stroke 0.2s ease; }
+/* --- Edge Styles --- */
+.react-flow__edge-path {
+    stroke: var(--text-secondary, #adb5bd);
+    stroke-width: 2;
+    transition: stroke 0.3s ease, opacity 0.3s ease;
+}
+.react-flow__edge.highlighted .react-flow__edge-path {
+    stroke: var(--highlight-accent, #7c5cbf);
+    stroke-width: 3;
+}
+
+/* --- FOCUS MODE STYLES (NEW) --- */
+.react-flow__node.faded, .react-flow__edge.faded {
+    opacity: 0.2;
+    transition: opacity 0.3s ease;
+}
+.react-flow__node.highlighted, .react-flow__edge.highlighted {
+    opacity: 1;
+}
 
 /* --- Side Panel Styles --- */
 .side-panel {
     position: absolute; top: 0; right: 0;
-    width: 320px; height: 100%;
-    background-color: var(--background-secondary);
-    border-left: 1px solid var(--border-color);
-    box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+    width: 340px; height: 100%;
+    background-color: var(--background-secondary, #ffffff);
+    border-left: 1px solid var(--border-color, #dee2e6);
+    box-shadow: -10px 0 30px rgba(0,0,0,0.07);
     z-index: 20;
-    transform: translateX(0);
-    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     animation: slideInFromRight 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: flex; flex-direction: column;
 }
 @keyframes slideInFromRight {
     from { transform: translateX(100%); }
@@ -82,15 +137,48 @@
 
 .close-button {
     position: absolute; top: 15px; right: 15px;
-    background: var(--background-primary); border: none;
-    border-radius: 50%; width: 30px; height: 30px;
+    background: var(--background-primary, #f1f3f5);
+    border: 1px solid var(--border-color, #dee2e6);
+    border-radius: 50%; width: 32px; height: 32px;
     cursor: pointer; display: flex; align-items: center; justify-content: center;
-    color: var(--text-secondary);
+    color: var(--text-secondary, #868e96);
+    transition: all 0.2s ease;
+    z-index: 21;
 }
-.close-button:hover { background: var(--border-color); color: var(--text-primary); }
+.close-button:hover {
+    background: var(--border-color, #e9ecef);
+    color: var(--text-primary, #212529);
+    transform: rotate(90deg);
+}
 
-.panel-content { padding: 2rem; }
-.panel-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
-.panel-icon { font-size: 2rem; color: var(--primary-accent); }
-.panel-content h3 { font-size: 1.5rem; color: var(--text-primary); margin: 0; }
-.panel-content p { font-size: 1rem; color: var(--text-secondary); line-height: 1.6; }
+.panel-content { padding: 60px 2rem 2rem 2rem; }
+.panel-header {
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color, #e9ecef);
+}
+.panel-icon { font-size: 2.25rem; color: var(--primary-accent, #339af0); }
+.panel-content h3 { font-size: 1.5rem; font-weight: 700; color: var(--text-primary, #212529); margin: 0; }
+.panel-content p { font-size: 1rem; color: var(--text-secondary, #495057); line-height: 1.7; }
+
+/* --- (All previous styles remain the same) --- */
+
+/* ... existing CSS ... */
+
+/* --- FOCUS MODE STYLES --- */
+.react-flow__node.faded, .react-flow__edge.faded {
+    opacity: 0.2;
+    transition: opacity 0.3s ease;
+}
+.react-flow__node.highlighted, .react-flow__edge.highlighted {
+    opacity: 1;
+}
+
+/* --- NEW STYLE FOR CLICKABLE PANE --- */
+.react-flow__pane.clickable {
+    cursor: pointer;
+}
+
+/* --- Side Panel Styles --- */
+/* ... existing CSS ... */

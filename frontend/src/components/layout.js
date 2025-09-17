@@ -21,6 +21,7 @@ export const getLayoutedElements = (nodes, edges) => {
     .then((layoutedGraph) => ({
       nodes: layoutedGraph.children.map((node) => ({
         ...node,
+        // elkjs returns x and y, which React Flow uses as position
         position: { x: node.x, y: node.y },
       })),
       edges: layoutedGraph.edges,
