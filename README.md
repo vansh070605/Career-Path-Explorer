@@ -1,64 +1,94 @@
-# 🤖 CAPE Model: Career Recommendation Engine
+# 🤖 CAPE — Career Path Explorer
 
-## 🚀 Overview
-> CAPE uses a machine learning model to help students discover the best career paths based on their skills, interests, and education. The model analyzes your profile and suggests careers that fit you best! :mag:
+![hero](./assets/hero.gif)
 
-***
+Short, explainable career recommendation engine that maps student profiles (skills, education, interests) to ranked career suggestions using a production-ready ML pipeline.
 
-## 🧠 How the Model Works
-- **Input Features:**
-  - Age :calendar:
-  - Education :mortar_board:
-  - Skills :computer: :paintbrush: :bar_chart:
-  - Interests :bulb: :books: :rocket:
-- **Preprocessing:**
-  - Categorical features (like education, skills, interests) are encoded :key:.
-  - Numeric features are scaled :straight_ruler:.
-- **Model:**
-  - Uses a Random Forest Classifier :deciduous_tree: for robust, interpretable predictions.
-  - Each tree votes for a career, and the most popular choice wins :trophy:.
-- **Output:**
-  - Top career recommendations :star2:
-  - Confidence scores :chart_with_upwards_trend:
+---
 
-***
+## 🚀 Highlights
+- Explainable Random Forest model with feature importance.
+- End-to-end pipeline: data → preprocessing → features → training → inference.
+- Top-N career recommendations with confidence scores.
+- Easy to run locally (Windows instructions included).
 
-## 📊 Evaluation Metrics
-- **Accuracy** :dart:
-- **Precision** :white_check_mark:
-- **Recall** :recycle:
-- **F1 Score** :medal_sports:
+---
 
-***
+## 📁 Project layout
+- data/ — raw and processed datasets
+- notebooks/ — EDA and experiments
+- src/
+  - data/ — preprocessing utilities
+  - features/ — feature builders
+  - models/ — training & inference code
+  - utils/ — helpers
+- models/ — saved model artifacts
+- scripts/ — convenience scripts
 
-## 🛠️ Example Usage
+---
+
+## ⚙️ Quickstart (Windows)
+1. Clone:
+   git clone https://github.com/<your-org>/Career-Path-Explorer.git
+2. Create venv and activate (PowerShell):
+   ```
+   python -m venv .venv
+   .\.venv\Scripts\Activate.ps1
+   ```
+3. Install:
+   ```
+   pip install -r requirements.txt
+   ```
+4. Prepare data and train:
+   ```
+   python -m src.data.preprocess data/raw data/processed
+   python -m src.models.trainer --config configs/train.yaml
+   ```
+
+---
+
+## 🔬 Example inference
 ```python
-# Predict career for a new candidate
-new_df = pd.DataFrame([new_candidate])
-pred = model.predict(new_df)
-print('Recommended Career:', le_career.inverse_transform(pred)[0])
+# filepath: example_inference.py
+import pandas as pd
+from joblib import load
+
+model = load("models/cape_rf.joblib")
+le_career = load("models/le_career.joblib")
+
+new_candidate = {
+    "age": 22,
+    "education": "Bachelors",
+    "skills": ["python","sql","data-visualization"],
+    "interests": ["ml","analytics"]
+}
+df = pd.DataFrame([new_candidate])
+pred = model.predict(df)
+print("Recommendation:", le_career.inverse_transform(pred)[0])
 ```
 
-***
+---
 
-## 🌟 Why Random Forest?
-- Handles many features :package:
-- Robust to missing data :umbrella:
-- Explains which skills or interests matter most :bulb:
+## 📈 Evaluation
+Tracks accuracy, precision, recall, F1. Use notebooks/ for visualizations and error analysis.
 
-***
+---
 
-## 💡 Next Steps
-- Try other models (e.g., Gradient Boosting :zap:)
-- Tune hyperparameters for better results :gear:
-- Use top-N recommendations for more options :sparkles:
+## ✨ Animated README asset
+Add a short looping GIF at ./assets/hero.gif (optimized < 2MB) for the animated header. Example sources:
+- Create a screen recording of model demo and convert to GIF.
+- Use an animated SVG or GIF that you own.
 
-***
+---
 
-## 🙌 Contributing
-Feel free to open issues or pull requests! :raised_hands:
+## Contributing
+- Open issues for bugs/features.
+- PRs: follow code style and add tests for new behavior.
+- See CONTRIBUTING.md (create one if missing).
 
-***
+---
 
-> "CAPE helps you find your path—one prediction at a time!" :compass:
-//.\venv\Scripts\Activate.ps1
+## License
+MIT — see LICENSE.
+
+---
