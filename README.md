@@ -82,15 +82,6 @@ A compact, explainable career recommendation engine that maps student profiles (
     </a>
     <figcaption style="font-size:13px;color:#556;line-height:1.2;margin-top:8px;">Timeline Tracker — Progress & milestones</figcaption>
   </figure>
-
-  <figure style="width:320px;margin:0;text-align:center;font-family:system-ui,Segoe UI,Helvetica,Arial,sans-serif;">
-    <a href="./screenshots/feature_importance.png" style="display:block;text-decoration:none;color:inherit;">
-      <img src="./screenshots/feature_importance.png" alt="Feature Importance"
-        style="width:100%;height:auto;border-radius:12px;border:1px solid #e9eef2;box-shadow:0 12px 40px rgba(12,20,32,0.08);transition:transform .18s ease,box-shadow .18s ease;display:block;" />
-    </a>
-    <figcaption style="font-size:13px;color:#556;line-height:1.2;margin-top:8px;">Feature importance — Model explainability</figcaption>
-  </figure>
-
 </div>
 
 <p style="text-align:center;font-size:13px;color:#666;margin-top:12px;">
