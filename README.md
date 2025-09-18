@@ -27,6 +27,37 @@ Short, explainable career recommendation engine that maps student profiles (skil
 
 ---
 
+## 🖼️ Screenshots
+Add project screenshots to ./assets/screenshots/ and reference them here. Recommended images:
+- dashboard.png — main UI / recommendation view
+- pipeline.png — pipeline diagram or training metrics
+- demo.gif — short demo (optional)
+
+Example embeds:
+
+![Dashboard](./assets/screenshots/dashboard.png)
+*Dashboard: top career recommendations and confidence scores.*
+
+![Pipeline](./assets/screenshots/pipeline.png)
+*Pipeline: preprocessing → features → training → inference.*
+
+If you prefer side-by-side thumbnails, use HTML for layout:
+
+<p float="left">
+  <img src="./screenshots/dashboard.png" width="360" />
+  <img src="./screenshots/CollegeExplorer.png" width="360" />
+  <img src="./screenshots/Quiz.png" width="360" />
+  <img src="./screenshots/SkillBuilder.png" width="360" />
+  <img src="./screenshots/Visualizer.png" width="360" />
+  <img src="./screenshots/TimelineTracker.png" width="360" />
+</p>
+
+Notes:
+- Optimize images for web (keep each < 1–2MB).
+- Use 16:9 aspect ratio for consistency (e.g., 1200×675 or 800×450).
+
+---
+
 ## ⚙️ Quickstart (Windows)
 1. Clone:
    git clone https://github.com/<your-org>/Career-Path-Explorer.git
