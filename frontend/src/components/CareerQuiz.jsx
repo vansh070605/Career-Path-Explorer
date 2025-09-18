@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './CareerQuiz.css';
+import { useTranslation } from 'react-i18next';
 
 // FINAL: All questions with their full list of options
 const questions = [
@@ -16,7 +17,20 @@ const questions = [
 ];
 
 
+const optionKeyMap = {
+  'Accountancy': 'accountancy', 'Biology': 'biology', 'Business Studies': 'businessStudies', 'Chemistry': 'chemistry', 'Computer Science': 'computerScience', 'Design': 'design', 'Economics': 'economics', 'Fine Arts': 'fineArts', 'History': 'history', 'Maths': 'maths', 'Physics': 'physics', 'Political Science': 'politicalScience', 'Psychology': 'psychology',
+  'Coding': 'coding', 'Debating': 'debating', 'Designing': 'designing', 'Drawing': 'drawing', 'Experiments': 'experiments', 'Helping Others': 'helpingOthers', 'Organizing Events': 'organizingEvents', 'Public Speaking': 'publicSpeaking', 'Reading': 'reading', 'Research': 'research', 'Solving Puzzles': 'solvingPuzzles', 'Sports': 'sports', 'Writing': 'writing',
+  'Analysis': 'analysis', 'Communication': 'communication', 'Creativity': 'creativity', 'Design Thinking': 'designThinking', 'Financial Analysis': 'financialAnalysis', 'Leadership': 'leadership', 'Presentation': 'presentation', 'Problem Solving': 'problemSolving', 'Programming': 'programming', 'Teamwork': 'teamwork',
+  'Practical': 'practical', 'Theoretical': 'theoretical', 'Both': 'both',
+  'Classroom': 'classroom', 'Corporate Office': 'corporateOffice', 'Creative Studio': 'creativeStudio', 'Government Office': 'governmentOffice', 'NGO': 'ngo', 'Outdoors': 'outdoors', 'Research Lab': 'researchLab', 'Startup': 'startup',
+  'Yes': 'yes', 'No': 'no', 'Maybe': 'maybe',
+  'India': 'india', 'Abroad': 'abroad', 'Flexible': 'flexible',
+  'Job Security': 'jobSecurity', 'Creativity & Freedom': 'creativityFreedom', 'Balanced': 'balanced',
+  'Artist': 'artist', 'Civil Servant': 'civilServant', 'Data Scientist': 'dataScientist', 'Designer': 'designer', 'Doctor': 'doctor', 'Engineer': 'engineer', 'Entrepreneur': 'entrepreneur', 'Lawyer': 'lawyer', 'Manager': 'manager', 'Scientist': 'scientist', 'Teacher': 'teacher'
+};
+
 const CareerQuiz = () => {
+    const { t } = useTranslation();
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [answers, setAnswers] = useState(() => {
         const initialAnswers = {};
@@ -30,6 +44,11 @@ const CareerQuiz = () => {
 
     const currentQuestion = questions[currentQuestionIndex];
     const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+
+    const translateOption = (option) => {
+        const key = optionKeyMap[option];
+        return key ? t(`quiz.options.${key}`, option) : option;
+    };
 
     const handleSelectionChange = (questionId, option) => {
         setAnswers(prevAnswers => {
@@ -108,10 +127,10 @@ const CareerQuiz = () => {
         return (
             <div className="career-quiz-container show-results">
                 <div className="quiz-results">
-                    <h3>Your Personalized Recommendation</h3>
-                    <p><strong>Recommended Path:</strong> {result.recommendation}</p>
+                    <h3>{t('quiz.yourRecommendationTitle')}</h3>
+                    <p><strong>{t('quiz.recommendedPath')}</strong> {result.recommendation}</p>
                     <button onClick={handleReset} className="btn-nav btn-retake">
-                        <i className="fas fa-redo"></i> Retake Quiz
+                        <i className="fas fa-redo"></i> {t('quiz.retakeQuiz')}
                     </button>
                 </div>
             </div>
@@ -135,7 +154,7 @@ const CareerQuiz = () => {
 
                 <div className="quiz-card" key={currentQuestionIndex}>
                     <div className={`question-content ${animation}`}>
-                        <h2 className="question-text">{currentQuestion.text}</h2>
+                        <h2 className="question-text">{t(`quiz.questions.${currentQuestion.id}.text`, currentQuestion.text)}</h2>
                         <div className="options-grid">
                             {currentQuestion.options.map(option => (
                                 <button
@@ -143,7 +162,7 @@ const CareerQuiz = () => {
                                     className={`option-card ${answers[currentQuestion.id]?.includes(option) ? 'selected' : ''}`}
                                     onClick={() => handleSelectionChange(currentQuestion.id, option)}
                                 >
-                                    {option}
+                                    {translateOption(option)}
                                 </button>
                             ))}
                         </div>
@@ -152,15 +171,15 @@ const CareerQuiz = () => {
 
                 <div className="quiz-navigation">
                     <button onClick={handleBack} className="btn-nav btn-back" disabled={currentQuestionIndex === 0}>
-                        <i className="fas fa-arrow-left"></i> Back
+                        <i className="fas fa-arrow-left"></i> {t('quiz.back')}
                     </button>
                     {currentQuestionIndex < questions.length - 1 ? (
                         <button onClick={handleNext} className="btn-nav btn-next">
-                            Next <i className="fas fa-arrow-right"></i>
+                            {t('quiz.next')} <i className="fas fa-arrow-right"></i>
                         </button>
                     ) : (
                         <button onClick={handleSubmit} className="btn-nav btn-submit" disabled={loading}>
-                            {loading ? "Predicting..." : "Get Results ✨"}
+                            {loading ? t('quiz.predicting') : t('quiz.submit')}
                         </button>
                     )}
                 </div>

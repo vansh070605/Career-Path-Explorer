@@ -5,3 +5,17 @@
   justify-content: center;
   align-items: center;
 }
+
+/* RTL support */
+html[dir='rtl'] .dashboard-container {
+  direction: rtl;
+}
+
+.lang-switcher {
+  margin-right: 12px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: transparent;
+  color: inherit;
+}

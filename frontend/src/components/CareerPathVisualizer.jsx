@@ -3,6 +3,7 @@ import ReactFlow, { MiniMap, Controls, Background, useNodesState, useEdgesState 
 import { getLayoutedElements } from './layout.js';
 import 'reactflow/dist/style.css';
 import './CareerPathVisualizer.css';
+import { useTranslation } from 'react-i18next';
 
 // --- Custom Node with Icon ---
 const IconNode = ({ data }) => (
@@ -78,10 +79,24 @@ const fullDataset = {
 
 // --- Side Panel Component (No Change) ---
 const SidePanel = ({ node, onClose }) => {
-    // ... (same as before)
+    const { t } = useTranslation();
+    if (!node) return null;
+    return (
+        <div className="side-panel">
+            <button className="close-button" onClick={onClose}><i className="fas fa-times"></i></button>
+            <div className="panel-content">
+                <div className="panel-header">
+                    <i className={`panel-icon ${node.data.icon}`}></i>
+                    <h3>{node.data.label}</h3>
+                </div>
+                <p>{node.data.description}</p>
+            </div>
+        </div>
+    );
 };
 
 const CareerPathVisualizer = () => {
+  const { t } = useTranslation();
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [selectedNode, setSelectedNode] = useState(null);
@@ -97,6 +112,19 @@ const CareerPathVisualizer = () => {
       setEdges(edges);
     });
   }, []);
+
+  const onNodeMouseEnter = useCallback((event, node) => {
+    setEdges(prevEdges => prevEdges.map(edge => {
+        if (edge.source === node.id || edge.target === node.id) {
+            return { ...edge, animated: true, style: { ...edge.style, stroke: 'var(--highlight-accent)', strokeWidth: 3 } };
+        }
+        return edge;
+    }));
+  }, [setEdges]);
+
+  const onNodeMouseLeave = useCallback((event, node) => {
+    setEdges(prevEdges => prevEdges.map(edge => ({ ...edge, animated: false, style: { ...edge.style, stroke: 'var(--text-secondary)', strokeWidth: 2 } })));
+  }, [setEdges]);
   
   // Effect to apply styles when the active node changes
   useEffect(() => {
@@ -143,8 +171,8 @@ const CareerPathVisualizer = () => {
   return (
     <div className="visualizer-container">
       <div className="visualizer-header">
-        <h2>Dynamic Career Path Visualizer</h2>
-        <p>Click on a node to reveal its path. Click the background to reset.</p>
+        <h2>{t('visualizer.title')}</h2>
+        <p>{t('visualizer.subtitle')}</p>
       </div>
       <div className="visualizer-wrapper">
         <ReactFlow
@@ -160,9 +188,9 @@ const CareerPathVisualizer = () => {
           paneClassName={activeNodeId ? 'clickable' : ''} // Add class for cursor change
         >
           <div className="visualizer-legend">
-            <div className="legend-item"><span className="color-box subjects"></span>Subjects</div>
-            <div className="legend-item"><span className="color-box degrees"></span>Degrees</div>
-            <div className="legend-item"><span className="color-box careers"></span>Careers</div>
+            <div className="legend-item"><span className="color-box subjects"></span>{t('visualizer.legendSubjects')}</div>
+            <div className="legend-item"><span className="color-box degrees"></span>{t('visualizer.legendDegrees')}</div>
+            <div className="legend-item"><span className="color-box careers"></span>{t('visualizer.legendCareers')}</div>
           </div>
           <Controls />
           <Background variant="dots" gap={24} size={1} />

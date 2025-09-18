@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useMemo } from "react";
 import './CollegeExplorer.css';
+import { useTranslation } from 'react-i18next';
 
 const API_BASE = import.meta.env.VITE_API_BASE || "http://127.0.0.1:5000/api";
 
 const CollegeCard = ({ college, animationDelay, isTier1 }) => {
+  const { t } = useTranslation();
   const getSafeWebsite = (url) => {
     if (!url || url.trim() === "") return null;
     return url.startsWith("http://") || url.startsWith("https://")
@@ -15,11 +17,10 @@ const CollegeCard = ({ college, animationDelay, isTier1 }) => {
 
   return (
     <div
-      // Add the 'tier-1-card' class if it's a Tier 1 college
       className={`college-card ${isTier1 ? 'tier-1-card' : ''}`}
       style={{ animationDelay: `${animationDelay}ms` }}
     >
-      {isTier1 && <div className="featured-tag">Featured</div>}
+      {isTier1 && <div className="featured-tag">{t('college.featured')}</div>}
       <div className="card-content">
           <h3>{college.college_name}</h3>
           <p><i className="fas fa-map-marker-alt"></i> {college.city}</p>
@@ -31,7 +32,7 @@ const CollegeCard = ({ college, animationDelay, isTier1 }) => {
                   <div key={i} className="ranking-item">
                       <span className="ranking-field">{ranking.field}</span>
                       <span className="ranking-score">
-                          Rank: <b>{ranking.ranking ?? "N/A"}</b> | Score: <b>{ranking.score ?? "N/A"}</b>
+                          {t('college.rank')}: <b>{ranking.ranking ?? "N/A"}</b> | {t('college.score')}: <b>{ranking.score ?? "N/A"}</b>
                       </span>
                   </div>
               ))}
@@ -40,7 +41,7 @@ const CollegeCard = ({ college, animationDelay, isTier1 }) => {
 
       {websiteUrl && (
           <a href={websiteUrl} target="_blank" rel="noopener noreferrer" className="btn-visit">
-              Visit Website <i className="fas fa-external-link-alt"></i>
+              {t('common.visitWebsite')} <i className="fas fa-external-link-alt"></i>
           </a>
       )}
     </div>
@@ -48,6 +49,7 @@ const CollegeCard = ({ college, animationDelay, isTier1 }) => {
 };
 
 const CollegeExplorer = () => {
+  const { t } = useTranslation();
   const [states, setStates] = useState([]);
   const [selectedState, setSelectedState] = useState("");
   const [colleges, setColleges] = useState([]);
@@ -63,11 +65,11 @@ const CollegeExplorer = () => {
         setStates(data.sort());
       } catch (err) {
         console.error("❌ Error fetching states:", err.message);
-        setError("Failed to fetch states. Please check backend.");
+        setError(t('college.errorStates'));
       }
     };
     fetchStates();
-  }, []);
+  }, [t]);
 
   const handleStateChange = (state) => {
     setSelectedState(state);
@@ -97,7 +99,7 @@ const CollegeExplorer = () => {
       setColleges(data);
     } catch (err) {
       console.error("❌ Error fetching colleges:", err.message);
-      setError(`Failed to fetch colleges: ${err.message}`);
+      setError(`${t('college.errorCollegesPrefix')}${err.message}`);
     } finally {
       setLoading(false);
     }
@@ -123,13 +125,13 @@ const CollegeExplorer = () => {
   return (
     <div className="college-explorer-container">
         <div className="college-explorer-header">
-            <h2 className="explorer-title">Find Colleges by State</h2>
+            <h2 className="explorer-title">{t('college.title')}</h2>
             <select
                 className="state-dropdown"
                 value={selectedState}
                 onChange={(e) => handleStateChange(e.target.value)}
             >
-                <option value="" disabled>-- Select a State --</option>
+                <option value="" disabled>{t('college.selectStatePlaceholder')}</option>
                 {states.map((st, i) => (
                     <option key={i} value={st}>{st}</option>
                 ))}
@@ -142,7 +144,7 @@ const CollegeExplorer = () => {
         <div className="error-container">
           <p className="error-message">{error}</p>
           <button className="btn-retry" onClick={() => fetchColleges(selectedState)}>
-             <i className="fas fa-redo"></i> Retry
+             <i className="fas fa-redo"></i> {t('common.retry')}
           </button>
         </div>
       )}
@@ -151,7 +153,7 @@ const CollegeExplorer = () => {
         <div className="results-container">
           {tier1.length > 0 && (
             <div className="college-section">
-              <h3>Tier-1 Colleges in {selectedState}</h3>
+              <h3>{t('college.tier1InState', { state: selectedState })}</h3>
               <div className="college-list">
                 {tier1.map((c, i) => <CollegeCard key={c.college_name + i} college={c} animationDelay={i * 100} isTier1={true} />)}
               </div>
@@ -159,7 +161,7 @@ const CollegeExplorer = () => {
           )}
           {tier2.length > 0 && (
             <div className="college-section">
-              <h3>Tier-2 Colleges in {selectedState}</h3>
+              <h3>{t('college.tier2InState', { state: selectedState })}</h3>
               <div className="college-list">
                 {tier2.map((c, i) => <CollegeCard key={c.college_name + i} college={c} animationDelay={(tier1.length + i) * 100} />)}
               </div>
@@ -167,7 +169,7 @@ const CollegeExplorer = () => {
           )}
           {others.length > 0 && (
             <div className="college-section">
-              <h3>Other Notable Colleges in {selectedState}</h3>
+              <h3>{t('college.othersInState', { state: selectedState })}</h3>
               <div className="college-list">
                 {others.map((c, i) => <CollegeCard key={c.college_name + i} college={c} animationDelay={(tier1.length + tier2.length + i) * 100} />)}
               </div>
@@ -175,7 +177,7 @@ const CollegeExplorer = () => {
           )}
           {colleges.length === 0 && (
             <div className="no-colleges-message">
-              <p>No colleges found for {selectedState}.</p>
+              <p>{t('college.noCollegesForState', { state: selectedState })}</p>
             </div>
           )}
         </div>
@@ -183,7 +185,7 @@ const CollegeExplorer = () => {
 
       {!loading && !error && !selectedState && (
         <div className="no-colleges-message">
-          <p>Please select a state from the dropdown to begin.</p>
+          <p>{t('college.promptSelectState')}</p>
         </div>
       )}
     </div>
