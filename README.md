@@ -35,7 +35,7 @@ Add project screenshots to ./assets/screenshots/ and reference them here. Recomm
 
 Example embeds:
 
-![Dashboard](./assets/screenshots/Dashboard.png)
+![Dashboard](./screenshots/Dashboard.png)
 *Dashboard: top career recommendations and confidence scores.*
 
 If you prefer side-by-side thumbnails, use HTML for layout:
