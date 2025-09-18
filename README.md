@@ -43,14 +43,49 @@ Example embeds:
 
 If you prefer side-by-side thumbnails, use HTML for layout:
 
-<p float="left">
-  <img src="./screenshots/dashboard.png" width="360" />
-  <img src="./screenshots/CollegeExplorer.png" width="360" />
-  <img src="./screenshots/Quiz.png" width="360" />
-  <img src="./screenshots/SkillBuilder.png" width="360" />
-  <img src="./screenshots/Visualizer.png" width="360" />
-  <img src="./screenshots/TimelineTracker.png" width="360" />
-</p>
+<div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;align-items:flex-start;">
+  <figure style="margin:0;text-align:center;width:360px;">
+    <a href="./screenshots/dashboard.png" style="display:block;text-decoration:none;color:inherit;">
+      <img src="./screenshots/dashboard.png" alt="Dashboard" style="width:100%;height:auto;border-radius:8px;border:1px solid #e6e6e6;box-shadow:0 6px 18px rgba(0,0,0,0.10);" />
+    </a>
+    <figcaption style="font-size:13px;color:#444;margin-top:8px;">Dashboard — Top career recommendations & confidence scores</figcaption>
+  </figure>
+
+  <figure style="margin:0;text-align:center;width:360px;">
+    <a href="./screenshots/CollegeExplorer.png" style="display:block;text-decoration:none;color:inherit;">
+      <img src="./screenshots/CollegeExplorer.png" alt="College Explorer" style="width:100%;height:auto;border-radius:8px;border:1px solid #e6e6e6;box-shadow:0 6px 18px rgba(0,0,0,0.10);" />
+    </a>
+    <figcaption style="font-size:13px;color:#444;margin-top:8px;">College Explorer — Explore programs and fit</figcaption>
+  </figure>
+
+  <figure style="margin:0;text-align:center;width:360px;">
+    <a href="./screenshots/Quiz.png" style="display:block;text-decoration:none;color:inherit;">
+      <img src="./screenshots/Quiz.png" alt="Quiz" style="width:100%;height:auto;border-radius:8px;border:1px solid #e6e6e6;box-shadow:0 6px 18px rgba(0,0,0,0.10);" />
+    </a>
+    <figcaption style="font-size:13px;color:#444;margin-top:8px;">Quiz — Skill & interest assessment</figcaption>
+  </figure>
+
+  <figure style="margin:0;text-align:center;width:360px;">
+    <a href="./screenshots/SkillBuilder.png" style="display:block;text-decoration:none;color:inherit;">
+      <img src="./screenshots/SkillBuilder.png" alt="Skill Builder" style="width:100%;height:auto;border-radius:8px;border:1px solid #e6e6e6;box-shadow:0 6px 18px rgba(0,0,0,0.10);" />
+    </a>
+    <figcaption style="font-size:13px;color:#444;margin-top:8px;">Skill Builder — Learning path suggestions</figcaption>
+  </figure>
+
+  <figure style="margin:0;text-align:center;width:360px;">
+    <a href="./screenshots/Visualizer.png" style="display:block;text-decoration:none;color:inherit;">
+      <img src="./screenshots/Visualizer.png" alt="Visualizer" style="width:100%;height:auto;border-radius:8px;border:1px solid #e6e6e6;box-shadow:0 6px 18px rgba(0,0,0,0.10);" />
+    </a>
+    <figcaption style="font-size:13px;color:#444;margin-top:8px;">Visualizer — Data insights & feature importance</figcaption>
+  </figure>
+
+  <figure style="margin:0;text-align:center;width:360px;">
+    <a href="./screenshots/TimelineTracker.png" style="display:block;text-decoration:none;color:inherit;">
+      <img src="./screenshots/TimelineTracker.png" alt="Timeline Tracker" style="width:100%;height:auto;border-radius:8px;border:1px solid #e6e6e6;box-shadow:0 6px 18px rgba(0,0,0,0.10);" />
+    </a>
+    <figcaption style="font-size:13px;color:#444;margin-top:8px;">Timeline Tracker — Progress & milestones</figcaption>
+  </figure>
+</div>
 
 Notes:
 - Optimize images for web (keep each < 1–2MB).
