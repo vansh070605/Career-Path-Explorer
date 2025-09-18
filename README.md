@@ -156,26 +156,34 @@ LICENSE                      - MIT
 
 ### ✨ Contributors
 
-<div align="center" style="display:flex;gap:28px;flex-wrap:wrap;align-items:center;justify-content:center;margin:12px 0;">
+<div align="center" style="display:flex;gap:28px;flex-wrap:nowrap;align-items:flex-start;justify-content:center;margin:16px 0;">
 
-  <a href="https://github.com/vansh070605" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;">
-    <img src="https://github.com/vansh070605.png" width="56" height="56" alt="Vansh Agrawal" style="border-radius:50%;box-shadow:0 6px 18px rgba(11,22,39,0.08);"/>
-    <span style="font-weight:600;color:#0b63d6;">Vansh Agrawal</span>
+  <a href="https://github.com/vansh070605" style="text-decoration:none;color:inherit;text-align:center;">
+    <figure style="margin:0;">
+      <img src="https://github.com/vansh070605.png" width="72" height="72" alt="Vansh Agrawal" style="border-radius:50%;box-shadow:0 6px 18px rgba(11,22,39,0.08);display:block;" />
+      <figcaption style="font-weight:600;color:#0b63d6;margin-top:8px;font-size:14px;">Vansh Agrawal</figcaption>
+    </figure>
   </a>
 
-  <a href="https://github.com/VanshRajput-dev" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;">
-    <img src="https://github.com/VanshRajput-dev.png" width="56" height="56" alt="Vansh.C" style="border-radius:50%;box-shadow:0 6px 18px rgba(11,22,39,0.08);"/>
-    <span style="font-weight:600;color:#0b63d6;">Vansh.C</span>
+  <a href="https://github.com/VanshRajput-dev" style="text-decoration:none;color:inherit;text-align:center;">
+    <figure style="margin:0;">
+      <img src="https://github.com/VanshRajput-dev.png" width="72" height="72" alt="Vansh.C" style="border-radius:50%;box-shadow:0 6px 18px rgba(11,22,39,0.08);display:block;" />
+      <figcaption style="font-weight:600;color:#0b63d6;margin-top:8px;font-size:14px;">Vansh.C</figcaption>
+    </figure>
   </a>
 
-  <a href="https://github.com/SwAsTiK6937" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;">
-    <img src="https://github.com/SwAsTiK6937.png" width="56" height="56" alt="Swastik Pandey" style="border-radius:50%;box-shadow:0 6px 18px rgba(11,22,39,0.08);"/>
-    <span style="font-weight:600;color:#0b63d6;">Swastik Pandey</span>
+  <a href="https://github.com/SwAsTiK6937" style="text-decoration:none;color:inherit;text-align:center;">
+    <figure style="margin:0;">
+      <img src="https://github.com/SwAsTiK6937.png" width="72" height="72" alt="Swastik Pandey" style="border-radius:50%;box-shadow:0 6px 18px rgba(11,22,39,0.08);display:block;" />
+      <figcaption style="font-weight:600;color:#0b63d6;margin-top:8px;font-size:14px;">Swastik Pandey</figcaption>
+    </figure>
   </a>
 
-  <a href="https://github.com/Shash309" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;">
-    <img src="https://github.com/Shash309.png" width="56" height="56" alt="Shashwat Sharma" style="border-radius:50%;box-shadow:0 6px 18px rgba(11,22,39,0.08);"/>
-    <span style="font-weight:600;color:#0b63d6;">Shashwat Sharma</span>
+  <a href="https://github.com/Shash309" style="text-decoration:none;color:inherit;text-align:center;">
+    <figure style="margin:0;">
+      <img src="https://github.com/Shash309.png" width="72" height="72" alt="Shashwat Sharma" style="border-radius:50%;box-shadow:0 6px 18px rgba(11,22,39,0.08);display:block;" />
+      <figcaption style="font-weight:600;color:#0b63d6;margin-top:8px;font-size:14px;">Shashwat Sharma</figcaption>
+    </figure>
   </a>
 
 </div>
