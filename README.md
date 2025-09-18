@@ -33,30 +33,69 @@ A compact, explainable career recommendation engine that maps student profiles (
 
 ## 🖼️ Quick preview
 
-<div align="center" style="display:flex;flex-wrap:wrap;gap:18px;justify-content:center;">
-  <figure style="width:320px;margin:0;text-align:center;">
-    <a href="./screenshots/Dashboard.png" style="display:block;">
-      <img src="./screenshots/Dashboard.png" alt="Dashboard" style="width:100%;border-radius:10px;border:1px solid #f0f0f0;box-shadow:0 10px 30px rgba(12, 20, 32, 0.08);transition:transform .15s ease" />
+<div align="center" style="display:flex;flex-wrap:wrap;gap:18px;justify-content:center;max-width:1200px;margin:0 auto;">
+
+  <figure style="width:320px;margin:0;text-align:center;font-family:system-ui,Segoe UI,Helvetica,Arial,sans-serif;">
+    <a href="./screenshots/Dashboard.png" style="display:block;text-decoration:none;color:inherit;">
+      <img src="./screenshots/Dashboard.png" alt="Dashboard"
+        style="width:100%;height:auto;border-radius:12px;border:1px solid #e9eef2;box-shadow:0 12px 40px rgba(12,20,32,0.08);transition:transform .18s ease,box-shadow .18s ease;display:block;" />
     </a>
-    <figcaption style="font-size:13px;color:#555;margin-top:8px;">Dashboard — Top career recommendations</figcaption>
+    <figcaption style="font-size:13px;color:#556;line-height:1.2;margin-top:8px;">Dashboard — Top career recommendations</figcaption>
   </figure>
 
-  <figure style="width:320px;margin:0;text-align:center;">
-    <a href="./screenshots/Quiz.png" style="display:block;">
-      <img src="./screenshots/Quiz.png" alt="Quiz" style="width:100%;border-radius:10px;border:1px solid #f0f0f0;box-shadow:0 10px 30px rgba(12, 20, 32, 0.08);transition:transform .15s ease" />
+  <figure style="width:320px;margin:0;text-align:center;font-family:system-ui,Segoe UI,Helvetica,Arial,sans-serif;">
+    <a href="./screenshots/Quiz.png" style="display:block;text-decoration:none;color:inherit;">
+      <img src="./screenshots/Quiz.png" alt="Quiz"
+        style="width:100%;height:auto;border-radius:12px;border:1px solid #e9eef2;box-shadow:0 12px 40px rgba(12,20,32,0.08);transition:transform .18s ease,box-shadow .18s ease;display:block;" />
     </a>
-    <figcaption style="font-size:13px;color:#555;margin-top:8px;">Quiz — Skill & interest assessment</figcaption>
+    <figcaption style="font-size:13px;color:#556;line-height:1.2;margin-top:8px;">Quiz — Skill & interest assessment</figcaption>
   </figure>
 
-  <figure style="width:320px;margin:0;text-align:center;">
-    <a href="./screenshots/Visualizer.png" style="display:block;">
-      <img src="./screenshots/Visualizer.png" alt="Visualizer" style="width:100%;border-radius:10px;border:1px solid #f0f0f0;box-shadow:0 10px 30px rgba(12, 20, 32, 0.08);transition:transform .15s ease" />
+  <figure style="width:320px;margin:0;text-align:center;font-family:system-ui,Segoe UI,Helvetica,Arial,sans-serif;">
+    <a href="./screenshots/Visualizer.png" style="display:block;text-decoration:none;color:inherit;">
+      <img src="./screenshots/Visualizer.png" alt="Visualizer"
+        style="width:100%;height:auto;border-radius:12px;border:1px solid #e9eef2;box-shadow:0 12px 40px rgba(12,20,32,0.08);transition:transform .18s ease,box-shadow .18s ease;display:block;" />
     </a>
-    <figcaption style="font-size:13px;color:#555;margin-top:8px;">Visualizer — Feature importance & insights</figcaption>
+    <figcaption style="font-size:13px;color:#556;line-height:1.2;margin-top:8px;">Visualizer — Feature importance & insights</figcaption>
   </figure>
+
+  <figure style="width:320px;margin:0;text-align:center;font-family:system-ui,Segoe UI,Helvetica,Arial,sans-serif;">
+    <a href="./screenshots/CollegeExplorer.png" style="display:block;text-decoration:none;color:inherit;">
+      <img src="./screenshots/CollegeExplorer.png" alt="College Explorer"
+        style="width:100%;height:auto;border-radius:12px;border:1px solid #e9eef2;box-shadow:0 12px 40px rgba(12,20,32,0.08);transition:transform .18s ease,box-shadow .18s ease;display:block;" />
+    </a>
+    <figcaption style="font-size:13px;color:#556;line-height:1.2;margin-top:8px;">College Explorer — Program & college details</figcaption>
+  </figure>
+
+  <figure style="width:320px;margin:0;text-align:center;font-family:system-ui,Segoe UI,Helvetica,Arial,sans-serif;">
+    <a href="./screenshots/SkillBuilder.png" style="display:block;text-decoration:none;color:inherit;">
+      <img src="./screenshots/SkillBuilder.png" alt="Skill Builder"
+        style="width:100%;height:auto;border-radius:12px;border:1px solid #e9eef2;box-shadow:0 12px 40px rgba(12,20,32,0.08);transition:transform .18s ease,box-shadow .18s ease;display:block;" />
+    </a>
+    <figcaption style="font-size:13px;color:#556;line-height:1.2;margin-top:8px;">Skill Builder — Learning path suggestions</figcaption>
+  </figure>
+
+  <figure style="width:320px;margin:0;text-align:center;font-family:system-ui,Segoe UI,Helvetica,Arial,sans-serif;">
+    <a href="./screenshots/TimelineTracker.png" style="display:block;text-decoration:none;color:inherit;">
+      <img src="./screenshots/TimelineTracker.png" alt="Timeline Tracker"
+        style="width:100%;height:auto;border-radius:12px;border:1px solid #e9eef2;box-shadow:0 12px 40px rgba(12,20,32,0.08);transition:transform .18s ease,box-shadow .18s ease;display:block;" />
+    </a>
+    <figcaption style="font-size:13px;color:#556;line-height:1.2;margin-top:8px;">Timeline Tracker — Progress & milestones</figcaption>
+  </figure>
+
+  <figure style="width:320px;margin:0;text-align:center;font-family:system-ui,Segoe UI,Helvetica,Arial,sans-serif;">
+    <a href="./screenshots/feature_importance.png" style="display:block;text-decoration:none;color:inherit;">
+      <img src="./screenshots/feature_importance.png" alt="Feature Importance"
+        style="width:100%;height:auto;border-radius:12px;border:1px solid #e9eef2;box-shadow:0 12px 40px rgba(12,20,32,0.08);transition:transform .18s ease,box-shadow .18s ease;display:block;" />
+    </a>
+    <figcaption style="font-size:13px;color:#556;line-height:1.2;margin-top:8px;">Feature importance — Model explainability</figcaption>
+  </figure>
+
 </div>
 
-*Tip: click any thumbnail to view the full-size image.*
+<p style="text-align:center;font-size:13px;color:#666;margin-top:12px;">
+  Tip: click any thumbnail to open the full-size image. Images are shown from <code>./screenshots/</code>.
+</p>
 
 ---
 
