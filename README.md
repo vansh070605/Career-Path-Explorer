@@ -35,18 +35,15 @@ Add project screenshots to ./assets/screenshots/ and reference them here. Recomm
 
 Example embeds:
 
-![Dashboard](./assets/screenshots/dashboard.png)
+![Dashboard](./assets/screenshots/Dashboard.png)
 *Dashboard: top career recommendations and confidence scores.*
-
-![Pipeline](./assets/screenshots/pipeline.png)
-*Pipeline: preprocessing → features → training → inference.*
 
 If you prefer side-by-side thumbnails, use HTML for layout:
 
 <div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;align-items:flex-start;">
   <figure style="margin:0;text-align:center;width:360px;">
-    <a href="./screenshots/dashboard.png" style="display:block;text-decoration:none;color:inherit;">
-      <img src="./screenshots/dashboard.png" alt="Dashboard" style="width:100%;height:auto;border-radius:8px;border:1px solid #e6e6e6;box-shadow:0 6px 18px rgba(0,0,0,0.10);" />
+    <a href="./screenshots/Dashboard.png" style="display:block;text-decoration:none;color:inherit;">
+      <img src="./screenshots/Dashboard.png" alt="Dashboard" style="width:100%;height:auto;border-radius:8px;border:1px solid #e6e6e6;box-shadow:0 6px 18px rgba(0,0,0,0.10);" />
     </a>
     <figcaption style="font-size:13px;color:#444;margin-top:8px;">Dashboard — Top career recommendations & confidence scores</figcaption>
   </figure>
