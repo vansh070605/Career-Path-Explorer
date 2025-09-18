@@ -14,15 +14,6 @@ A compact, explainable career recommendation engine that maps student profiles (
 
 ---
 
-## Contents
-- [Highlights](#highlights)
-- [Quick preview](#quick-preview)
-- [Project layout](#project-layout)
-- [Quickstart (Windows)](#quickstart-windows)
-- [Contributing & License](#contributing--license)
-
----
-
 ## 🚀 Highlights
 - Explainable Random Forest with feature importance and visualizer.
 - End-to-end pipeline: raw data → preprocessing → features → training → inference.
