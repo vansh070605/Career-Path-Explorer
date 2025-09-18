@@ -149,9 +149,30 @@ LICENSE                      - MIT
 
 ---
 
-## 🤝 Contributing & License
+## 🤝 Contributing
+
 - Contributions welcome — open issues or PRs.
 - Follow code style and add tests for new features.
-- Licensed under MIT — see LICENSE.
+
+### ✨ Contributors
+
+<p align="center">
+  <a href="https://github.com/vansh070605" title="Vansh Agrawal"><img src="https://github.com/vansh070605.png" width="56" height="56" alt="Vansh Agrawal" style="border-radius:50%;margin:0 10px;box-shadow:0 4px 12px rgba(0,0,0,0.12)"/></a>
+  <a href="https://github.com/VanshRajput-dev" title="Vansh.C"><img src="https://github.com/VanshRajput-dev.png" width="56" height="56" alt="Vansh.C" style="border-radius:50%;margin:0 10px;box-shadow:0 4px 12px rgba(0,0,0,0.12)"/></a>
+  <a href="https://github.com/SwAsTiK6937" title="Swastik Pandey"><img src="https://github.com/SwAsTiK6937.png" width="56" height="56" alt="Swastik Pandey" style="border-radius:50%;margin:0 10px;box-shadow:0 4px 12px rgba(0,0,0,0.12)"/></a>
+  <a href="https://github.com/Shash309" title="Shashwat Sharma"><img src="https://github.com/Shash309.png" width="56" height="56" alt="Shashwat Sharma" style="border-radius:50%;margin:0 10px;box-shadow:0 4px 12px rgba(0,0,0,0.12)"/></a>
+</p>
+
+<p align="center" style="margin-top:8px;font-size:14px;color:#444;">
+  <a href="https://github.com/vansh070605">Vansh Agrawal</a> &nbsp;·&nbsp;
+  <a href="https://github.com/VanshRajput-dev">Vansh.C</a> &nbsp;·&nbsp;
+  <a href="https://github.com/SwAsTiK6937">Swastik Pandey</a> &nbsp;·&nbsp;
+  <a href="https://github.com/Shash309">Shashwat Sharma</a>
+</p>
+
+---
+
+## 📜 License
+Licensed under MIT — see LICENSE.
 
 ---
