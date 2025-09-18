@@ -1,7 +1,3 @@
-Here’s a polished and styled version of your README that keeps all your paths, links, and structure the same — just visually improved with better Markdown styling, emojis, and clear section formatting:
-
----
-
 # 🤖 **CAPE — Career Path Explorer**
 
 <p align="center">
@@ -15,8 +11,11 @@ Here’s a polished and styled version of your README that keeps all your paths,
 ## 🚀 **Highlights**
 
 ✅ Explainable **Random Forest model** with feature importance
+<br>
 ✅ **End-to-end pipeline**: data → preprocessing → features → training → inference
+<br>
 ✅ **Top-N career recommendations** with confidence scores
+<br>
 ✅ Easy to run locally (**Windows instructions included**)
 
 ---
@@ -24,15 +23,29 @@ Here’s a polished and styled version of your README that keeps all your paths,
 ## 📁 **Project Layout**
 
 ```
-data/         - raw and processed datasets
-notebooks/    - EDA and experiments
-src/
-  ├── data/       - preprocessing utilities
-  ├── features/   - feature builders
-  ├── models/     - training & inference code
-  └── utils/      - helpers
-models/       - saved model artifacts
-scripts/      - convenience scripts
+.vscode/        - editor settings
+backend/        - Python backend, datasets and model artifacts
+  ├── datasets/       - CSV datasets used by backend
+  ├── models/         - saved models & encoders (joblib / pkl)
+  ├── merge_colleges.py
+  ├── check_model_shapes.py
+  ├── app.py
+  └── requirements.txt
+frontend/       - web client (Vite/React)
+  ├── public/
+  ├── src/
+  ├── package.json
+  └── README.md
+quiz/           - quiz micro-app and quiz-specific models
+  ├── models/         - emb_model, tfidf_vectorizer.joblib, voting_clf.joblib, label_encoder.joblib
+  ├── app.py
+  └── career_quiz_dataset_*.csv
+screenshots/    - images used in README (Dashboard.png, Quiz.png, etc.)
+notebooks/      - experiments and EDA notebooks (e.g., career.ipynb)
+models/         - additional persisted model artifacts (if any)
+requirements.txt - project-level Python deps (root or backend)
+README.md       - this file
+LICENSE         - project license (MIT)
 ```
 
 ---
