@@ -1,188 +1,127 @@
-# 🤖 **CAPE — Career Path Explorer**
+# 🤖 CAPE — Career Path Explorer
 
 <p align="center">
-  <img src="./assets/hero.gif" alt="CAPE Hero" width="700"/>
+  <img src="./assets/hero.gif" alt="CAPE Hero" width="760" style="border-radius:12px;box-shadow:0 8px 30px rgba(11,22,39,0.12)"/>
 </p>
 
-> A short, **explainable career recommendation engine** that maps student profiles (skills, education, interests) to **ranked career suggestions** using a production-ready ML pipeline.
+<p align="center">
+  <a href="#"><img alt="Python" src="https://img.shields.io/badge/python-3.10%2B-blue"/></a>
+  <a href="#"><img alt="License" src="https://img.shields.io/badge/license-MIT-green"/></a>
+  <a href="#"><img alt="Status" src="https://img.shields.io/badge/status-Prototype-orange"/></a>
+</p>
+
+A compact, explainable career recommendation engine that maps student profiles (skills, education, interests) to ranked career suggestions. Focused on reproducible ML pipelines and an interactive frontend for exploration.
 
 ---
 
-## 🚀 **Highlights**
-
-✅ Explainable **Random Forest model** with feature importance
-<br>
-✅ **End-to-end pipeline**: data → preprocessing → features → training → inference
-<br>
-✅ **Top-N career recommendations** with confidence scores
-<br>
-✅ Easy to run locally (**Windows instructions included**)
+## Contents
+- [Highlights](#highlights)
+- [Quick preview](#quick-preview)
+- [Project layout](#project-layout)
+- [Quickstart (Windows)](#quickstart-windows)
+- [Contributing & License](#contributing--license)
 
 ---
 
-## 📁 **Project Layout**
+## 🚀 Highlights
+- Explainable Random Forest with feature importance and visualizer.
+- End-to-end pipeline: raw data → preprocessing → features → training → inference.
+- Quiz micro-app for candidate profiling and personalized recommendations.
+- Web frontend (Vite/React) for interactive exploration.
+
+---
+
+## 🖼️ Quick preview
+
+<div align="center" style="display:flex;flex-wrap:wrap;gap:18px;justify-content:center;">
+  <figure style="width:320px;margin:0;text-align:center;">
+    <a href="./screenshots/Dashboard.png" style="display:block;">
+      <img src="./screenshots/Dashboard.png" alt="Dashboard" style="width:100%;border-radius:10px;border:1px solid #f0f0f0;box-shadow:0 10px 30px rgba(12, 20, 32, 0.08);transition:transform .15s ease" />
+    </a>
+    <figcaption style="font-size:13px;color:#555;margin-top:8px;">Dashboard — Top career recommendations</figcaption>
+  </figure>
+
+  <figure style="width:320px;margin:0;text-align:center;">
+    <a href="./screenshots/Quiz.png" style="display:block;">
+      <img src="./screenshots/Quiz.png" alt="Quiz" style="width:100%;border-radius:10px;border:1px solid #f0f0f0;box-shadow:0 10px 30px rgba(12, 20, 32, 0.08);transition:transform .15s ease" />
+    </a>
+    <figcaption style="font-size:13px;color:#555;margin-top:8px;">Quiz — Skill & interest assessment</figcaption>
+  </figure>
+
+  <figure style="width:320px;margin:0;text-align:center;">
+    <a href="./screenshots/Visualizer.png" style="display:block;">
+      <img src="./screenshots/Visualizer.png" alt="Visualizer" style="width:100%;border-radius:10px;border:1px solid #f0f0f0;box-shadow:0 10px 30px rgba(12, 20, 32, 0.08);transition:transform .15s ease" />
+    </a>
+    <figcaption style="font-size:13px;color:#555;margin-top:8px;">Visualizer — Feature importance & insights</figcaption>
+  </figure>
+</div>
+
+*Tip: click any thumbnail to view the full-size image.*
+
+---
+
+## 📁 Project layout
 
 ```
-.vscode/        - editor settings
-backend/        - Python backend, datasets and model artifacts
-  ├── datasets/       - CSV datasets used by backend
-  ├── models/         - saved models & encoders (joblib / pkl)
+.vscode/                     - editor settings
+backend/                     - Python backend, datasets and model artifacts
+  ├── datasets/              - many CSVs (College.csv, Engineering.csv, ... )
+  ├── app.py                 - backend app / demo scripts
   ├── merge_colleges.py
   ├── check_model_shapes.py
-  ├── app.py
+  ├── app.db                 - small demo DB (if present)
+  ├── career_1200_model.pkl
+  ├── quiz_label_encoder.pkl
+  ├── quiz_vectorizer.pkl
   └── requirements.txt
-frontend/       - web client (Vite/React)
+frontend/                    - Vite/React app (UI)
   ├── public/
   ├── src/
   ├── package.json
   └── README.md
-quiz/           - quiz micro-app and quiz-specific models
-  ├── models/         - emb_model, tfidf_vectorizer.joblib, voting_clf.joblib, label_encoder.joblib
+quiz/                        - quiz micro-app & quiz-specific models
+  ├── models/                - emb_model, tfidf_vectorizer.joblib, voting_clf.joblib, label_encoder.joblib
   ├── app.py
-  └── career_quiz_dataset_*.csv
-screenshots/    - images used in README (Dashboard.png, Quiz.png, etc.)
-notebooks/      - experiments and EDA notebooks (e.g., career.ipynb)
-models/         - additional persisted model artifacts (if any)
-requirements.txt - project-level Python deps (root or backend)
-README.md       - this file
-LICENSE         - project license (MIT)
+  └── career_quiz_dataset_1200.csv
+screenshots/                 - images used in README (Dashboard.png, Quiz.png, Visualizer.png, ...)
+notebooks/                   - EDA, experiments and visualizations
+README.md                    - this file
+requirements.txt             - root or backend Python deps
+LICENSE                      - MIT
 ```
 
----
-
-## 🖼️ **Screenshots**
-
-📌 Add project screenshots in `./assets/screenshots/` and reference them here.
-
-### Example Embeds
-
-![Dashboard](./screenshots/Dashboard.png)
-*Dashboard: top career recommendations and confidence scores.*
+(Structure reflects current workspace — files like career_model.pkl, scaler.pkl, colleges.csv are in root/backend as shown.)
 
 ---
 
-### 📊 Side-by-Side Thumbnails
-
-<div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;align-items:flex-start;">
-
-  <figure style="margin:0;text-align:center;width:360px;">
-    <a href="./screenshots/Dashboard.png">
-      <img src="./screenshots/Dashboard.png" alt="Dashboard" style="width:100%;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,0.10);" />
-    </a>
-    <figcaption style="font-size:13px;color:#444;margin-top:8px;">Dashboard — Top career recommendations & confidence scores</figcaption>
-  </figure>
-
-  <figure style="margin:0;text-align:center;width:360px;">
-    <a href="./screenshots/CollegeExplorer.png">
-      <img src="./screenshots/CollegeExplorer.png" alt="College Explorer" style="width:100%;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,0.10);" />
-    </a>
-    <figcaption style="font-size:13px;color:#444;margin-top:8px;">College Explorer — Explore programs and fit</figcaption>
-  </figure>
-
-  <figure style="margin:0;text-align:center;width:360px;">
-    <a href="./screenshots/Quiz.png">
-      <img src="./screenshots/Quiz.png" alt="Quiz" style="width:100%;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,0.10);" />
-    </a>
-    <figcaption style="font-size:13px;color:#444;margin-top:8px;">Quiz — Skill & interest assessment</figcaption>
-  </figure>
-
-  <figure style="margin:0;text-align:center;width:360px;">
-    <a href="./screenshots/SkillBuilder.png">
-      <img src="./screenshots/SkillBuilder.png" alt="Skill Builder" style="width:100%;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,0.10);" />
-    </a>
-    <figcaption style="font-size:13px;color:#444;margin-top:8px;">Skill Builder — Learning path suggestions</figcaption>
-  </figure>
-
-  <figure style="margin:0;text-align:center;width:360px;">
-    <a href="./screenshots/Visualizer.png">
-      <img src="./screenshots/Visualizer.png" alt="Visualizer" style="width:100%;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,0.10);" />
-    </a>
-    <figcaption style="font-size:13px;color:#444;margin-top:8px;">Visualizer — Data insights & feature importance</figcaption>
-  </figure>
-
-  <figure style="margin:0;text-align:center;width:360px;">
-    <a href="./screenshots/TimelineTracker.png">
-      <img src="./screenshots/TimelineTracker.png" alt="Timeline Tracker" style="width:100%;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,0.10);" />
-    </a>
-    <figcaption style="font-size:13px;color:#444;margin-top:8px;">Timeline Tracker — Progress & milestones</figcaption>
-  </figure>
-</div>
-
-> ⚡ **Tips:**
->
-> * Optimize images for web (< 2MB each).
-> * Use **16:9 aspect ratio** (e.g., 1200×675).
+## ⚙️ Quickstart (Windows)
+1. Clone:
+   git clone https://github.com/<your-org>/Career-Path-Explorer.git
+2. Create & activate venv (PowerShell):
+   ```
+   python -m venv .venv
+   .\.venv\Scripts\Activate.ps1
+   ```
+3. Install:
+   ```
+   pip install -r backend/requirements.txt
+   ```
+4. Run backend demo:
+   ```
+   python backend/app.py
+   ```
+5. Run frontend (from frontend/):
+   ```
+   cd frontend
+   npm install
+   npm run dev
+   ```
 
 ---
 
-## ⚙️ **Quickstart (Windows)**
-
-```bash
-# 1. Clone the repo
-git clone https://github.com/<your-org>/Career-Path-Explorer.git
-
-# 2. Create venv and activate
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-
-# 3. Install dependencies
-pip install -r requirements.txt
-
-# 4. Prepare data and train
-python -m src.data.preprocess data/raw data/processed
-python -m src.models.trainer --config configs/train.yaml
-```
+## 🤝 Contributing & License
+- Contributions welcome — open issues or PRs.
+- Follow code style and add tests for new features.
+- Licensed under MIT — see LICENSE.
 
 ---
-
-## 🔬 **Example Inference**
-
-```python
-# filepath: example_inference.py
-import pandas as pd
-from joblib import load
-
-model = load("models/cape_rf.joblib")
-le_career = load("models/le_career.joblib")
-
-new_candidate = {
-    "age": 22,
-    "education": "Bachelors",
-    "skills": ["python","sql","data-visualization"],
-    "interests": ["ml","analytics"]
-}
-df = pd.DataFrame([new_candidate])
-pred = model.predict(df)
-print("Recommendation:", le_career.inverse_transform(pred)[0])
-```
-
----
-
-## 📈 **Evaluation**
-
-Tracks: **accuracy, precision, recall, F1-score**
-👉 Use `notebooks/` for **visualizations** and **error analysis**.
-
----
-
-## ✨ **Animated README Asset**
-
-Add a short looping GIF at `./assets/hero.gif` (< 2MB).
-Options:
-
-* Screen recording of model demo → GIF
-* Animated SVG/GIF you own
-
----
-
-## 🤝 **Contributing**
-
-* Open issues for bugs/features
-* PRs: follow code style & add tests
-* See `CONTRIBUTING.md` (create one if missing)
-
----
-
-## 📜 **License**
-
-📝 MIT — see `LICENSE`
