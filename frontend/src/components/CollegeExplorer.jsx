@@ -22,27 +22,27 @@ const CollegeCard = ({ college, animationDelay, isTier1 }) => {
     >
       {isTier1 && <div className="featured-tag">{t('college.featured')}</div>}
       <div className="card-content">
-          <h3>{college.college_name}</h3>
-          <p><i className="fas fa-map-marker-alt"></i> {college.city}</p>
+        <h3>{college.college_name}</h3>
+        <p><i className="fas fa-map-marker-alt"></i> {college.city}</p>
       </div>
-      
+
       {college.rankings?.length > 0 && (
-          <div className="rankings-container">
-              {college.rankings.map((ranking, i) => (
-                  <div key={i} className="ranking-item">
-                      <span className="ranking-field">{ranking.field}</span>
-                      <span className="ranking-score">
-                          {t('college.rank')}: <b>{ranking.ranking ?? "N/A"}</b> | {t('college.score')}: <b>{ranking.score ?? "N/A"}</b>
-                      </span>
-                  </div>
-              ))}
-          </div>
+        <div className="rankings-container">
+          {college.rankings.map((ranking, i) => (
+            <div key={i} className="ranking-item">
+              <span className="ranking-field">{ranking.field}</span>
+              <span className="ranking-score">
+                {t('college.rank')}: <b>{ranking.ranking ?? "N/A"}</b> | {t('college.score')}: <b>{ranking.score ?? "N/A"}</b>
+              </span>
+            </div>
+          ))}
+        </div>
       )}
 
       {websiteUrl && (
-          <a href={websiteUrl} target="_blank" rel="noopener noreferrer" className="btn-visit">
-              {t('common.visitWebsite')} <i className="fas fa-external-link-alt"></i>
-          </a>
+        <a href={websiteUrl} target="_blank" rel="noopener noreferrer" className="btn-visit">
+          {t('common.visitWebsite')} <i className="fas fa-external-link-alt"></i>
+        </a>
       )}
     </div>
   );
@@ -104,12 +104,19 @@ const CollegeExplorer = () => {
       setLoading(false);
     }
   };
-  
+
+  /* Debugging: Log colleges when they change */
+  useEffect(() => {
+    if (colleges.length > 0) {
+      console.log("✅ Colleges loaded:", colleges.length, colleges[0]);
+    }
+  }, [colleges]);
+
   const getBestRanking = (college) => {
     if (!college.rankings?.length) return Infinity;
     const valid = college.rankings
       .map((r) => r.ranking)
-      .filter((r) => r !== null);
+      .filter((r) => r !== null && r !== undefined);
     return valid.length ? Math.min(...valid) : Infinity;
   };
 
@@ -118,25 +125,29 @@ const CollegeExplorer = () => {
     const r = getBestRanking(c);
     return r > 10 && r <= 25;
   });
+  // Fix: Include unranked colleges (Infinity) in 'Others'
   const others = colleges.filter(
-    (c) => getBestRanking(c) > 25 && getBestRanking(c) !== Infinity
+    (c) => {
+      const r = getBestRanking(c);
+      return r > 25 || r === Infinity;
+    }
   );
 
   return (
     <div className="college-explorer-container">
-        <div className="college-explorer-header">
-            <h2 className="explorer-title">{t('college.title')}</h2>
-            <select
-                className="state-dropdown"
-                value={selectedState}
-                onChange={(e) => handleStateChange(e.target.value)}
-            >
-                <option value="" disabled>{t('college.selectStatePlaceholder')}</option>
-                {states.map((st, i) => (
-                    <option key={i} value={st}>{st}</option>
-                ))}
-            </select>
-        </div>
+      <div className="college-explorer-header">
+        <h2 className="explorer-title">{t('college.title')}</h2>
+        <select
+          className="state-dropdown"
+          value={selectedState}
+          onChange={(e) => handleStateChange(e.target.value)}
+        >
+          <option value="" disabled>{t('college.selectStatePlaceholder')}</option>
+          {states.map((st, i) => (
+            <option key={i} value={st}>{st}</option>
+          ))}
+        </select>
+      </div>
 
       {loading && <div className="loading-spinner"><div></div><div></div><div></div></div>}
 
@@ -144,7 +155,7 @@ const CollegeExplorer = () => {
         <div className="error-container">
           <p className="error-message">{error}</p>
           <button className="btn-retry" onClick={() => fetchColleges(selectedState)}>
-             <i className="fas fa-redo"></i> {t('common.retry')}
+            <i className="fas fa-redo"></i> {t('common.retry')}
           </button>
         </div>
       )}

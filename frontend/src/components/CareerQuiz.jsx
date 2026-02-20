@@ -18,15 +18,15 @@ const questions = [
 
 
 const optionKeyMap = {
-  'Accountancy': 'accountancy', 'Biology': 'biology', 'Business Studies': 'businessStudies', 'Chemistry': 'chemistry', 'Computer Science': 'computerScience', 'Design': 'design', 'Economics': 'economics', 'Fine Arts': 'fineArts', 'History': 'history', 'Maths': 'maths', 'Physics': 'physics', 'Political Science': 'politicalScience', 'Psychology': 'psychology',
-  'Coding': 'coding', 'Debating': 'debating', 'Designing': 'designing', 'Drawing': 'drawing', 'Experiments': 'experiments', 'Helping Others': 'helpingOthers', 'Organizing Events': 'organizingEvents', 'Public Speaking': 'publicSpeaking', 'Reading': 'reading', 'Research': 'research', 'Solving Puzzles': 'solvingPuzzles', 'Sports': 'sports', 'Writing': 'writing',
-  'Analysis': 'analysis', 'Communication': 'communication', 'Creativity': 'creativity', 'Design Thinking': 'designThinking', 'Financial Analysis': 'financialAnalysis', 'Leadership': 'leadership', 'Presentation': 'presentation', 'Problem Solving': 'problemSolving', 'Programming': 'programming', 'Teamwork': 'teamwork',
-  'Practical': 'practical', 'Theoretical': 'theoretical', 'Both': 'both',
-  'Classroom': 'classroom', 'Corporate Office': 'corporateOffice', 'Creative Studio': 'creativeStudio', 'Government Office': 'governmentOffice', 'NGO': 'ngo', 'Outdoors': 'outdoors', 'Research Lab': 'researchLab', 'Startup': 'startup',
-  'Yes': 'yes', 'No': 'no', 'Maybe': 'maybe',
-  'India': 'india', 'Abroad': 'abroad', 'Flexible': 'flexible',
-  'Job Security': 'jobSecurity', 'Creativity & Freedom': 'creativityFreedom', 'Balanced': 'balanced',
-  'Artist': 'artist', 'Civil Servant': 'civilServant', 'Data Scientist': 'dataScientist', 'Designer': 'designer', 'Doctor': 'doctor', 'Engineer': 'engineer', 'Entrepreneur': 'entrepreneur', 'Lawyer': 'lawyer', 'Manager': 'manager', 'Scientist': 'scientist', 'Teacher': 'teacher'
+    'Accountancy': 'accountancy', 'Biology': 'biology', 'Business Studies': 'businessStudies', 'Chemistry': 'chemistry', 'Computer Science': 'computerScience', 'Design': 'design', 'Economics': 'economics', 'Fine Arts': 'fineArts', 'History': 'history', 'Maths': 'maths', 'Physics': 'physics', 'Political Science': 'politicalScience', 'Psychology': 'psychology',
+    'Coding': 'coding', 'Debating': 'debating', 'Designing': 'designing', 'Drawing': 'drawing', 'Experiments': 'experiments', 'Helping Others': 'helpingOthers', 'Organizing Events': 'organizingEvents', 'Public Speaking': 'publicSpeaking', 'Reading': 'reading', 'Research': 'research', 'Solving Puzzles': 'solvingPuzzles', 'Sports': 'sports', 'Writing': 'writing',
+    'Analysis': 'analysis', 'Communication': 'communication', 'Creativity': 'creativity', 'Design Thinking': 'designThinking', 'Financial Analysis': 'financialAnalysis', 'Leadership': 'leadership', 'Presentation': 'presentation', 'Problem Solving': 'problemSolving', 'Programming': 'programming', 'Teamwork': 'teamwork',
+    'Practical': 'practical', 'Theoretical': 'theoretical', 'Both': 'both',
+    'Classroom': 'classroom', 'Corporate Office': 'corporateOffice', 'Creative Studio': 'creativeStudio', 'Government Office': 'governmentOffice', 'NGO': 'ngo', 'Outdoors': 'outdoors', 'Research Lab': 'researchLab', 'Startup': 'startup',
+    'Yes': 'yes', 'No': 'no', 'Maybe': 'maybe',
+    'India': 'india', 'Abroad': 'abroad', 'Flexible': 'flexible',
+    'Job Security': 'jobSecurity', 'Creativity & Freedom': 'creativityFreedom', 'Balanced': 'balanced',
+    'Artist': 'artist', 'Civil Servant': 'civilServant', 'Data Scientist': 'dataScientist', 'Designer': 'designer', 'Doctor': 'doctor', 'Engineer': 'engineer', 'Entrepreneur': 'entrepreneur', 'Lawyer': 'lawyer', 'Manager': 'manager', 'Scientist': 'scientist', 'Teacher': 'teacher'
 };
 
 const CareerQuiz = () => {
@@ -86,34 +86,38 @@ const CareerQuiz = () => {
         setError("");
 
         try {
-            const formattedAnswers = {
-                Q1_Favorite_Subjects: answers.Q1.join(', '),
-                Q2_Enjoyed_Activities: answers.Q2.join(', '),
-                Q3_Strongest_Skills: answers.Q3.join(', '),
-                Q4_Work_Style: answers.Q4.join(', '),
-                Q5_Workplace_Preference: answers.Q5.join(', '),
-                Q6_Exam_Readiness: answers.Q6.join(', '),
-                Q7_Location_Preference: answers.Q7.join(', '),
-                Q8_Career_Values: answers.Q8.join(', '),
-                Q9_LongTerm_Goal: answers.Q9.join(', '),
-                Q10_Academic_Background: answers.Q10.join(', '),
-            };
+            // Convert structured answers into a single descriptive string for the NLP model
+            // Example: "Favorite subjects: Math, Physics. Skills: Analysis. ..."
+            const answersText = Object.entries(answers)
+                .map(([key, value]) => {
+                    // key is like "Q1", "Q2". value is array or string.
+                    // Find the question text
+                    const question = questions.find(q => q.id === key);
+                    const qText = question ? question.text : key;
+                    const valText = Array.isArray(value) ? value.join(", ") : value;
+                    return `${qText}: ${valText}`;
+                })
+                .join(". ");
 
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/predict`, {
+            console.log("Sending text to backend:", answersText);
+
+            const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:5000'}/predict`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ features: formattedAnswers }),
+                body: JSON.stringify({ features: answersText }),
             });
 
             const data = await res.json();
             if (data.error) throw new Error(data.error);
             setResult({ recommendation: data.career });
         } catch (err) {
-            setError(err.message);
+            console.error(err);
+            setError(err.message || "Something went wrong. Please try again.");
         } finally {
             setLoading(false);
         }
     };
+
 
     const handleReset = () => {
         const initialAnswers = {};
@@ -143,7 +147,7 @@ const CareerQuiz = () => {
                 <div className="quiz-progress-bar">
                     <div className="progress-fill" style={{ width: `${progress}%` }}></div>
                 </div>
-                
+
                 <div className="quiz-top-nav">
                     {questions.map((q, index) => (
                         <div key={q.id} className={`nav-item-top ${currentQuestionIndex === index ? 'active' : ''} ${answers[q.id]?.length > 0 ? 'answered' : ''}`}>

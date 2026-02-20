@@ -1,155 +1,274 @@
-/* --- Main Container & Layout --- */
+/* Career Quiz Container */
 .career-quiz-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  min-height: 80vh;
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
   justify-content: center;
-  width: 100%;
-  padding: 2rem;
-  animation: fadeIn 0.5s ease-out;
-}
-.career-quiz-container.show-results {
-  align-items: center;
+  animation: fadeIn 0.6s ease-out;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Main Content Card */
 .quiz-main-content {
-  width: 100%;
-  max-width: 900px; /* Wider for grid layout */
-}
-
-/* --- Progress Bar & Top Nav --- */
-.quiz-progress-bar {
-  width: 100%;
-  height: 10px;
-  background-color: var(--surface-accent);
-  border-radius: 10px;
-  margin-bottom: 1.5rem;
+  background: rgba(30, 41, 59, 0.7);
+  /* Darker, more opaque background */
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 3rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  position: relative;
   overflow: hidden;
 }
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--highlight-accent) 0%, var(--primary-accent) 100%);
-  border-radius: 10px;
-  transition: width 0.4s ease-in-out;
+
+/* Progress Bar */
+.quiz-progress-bar {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
 }
 
+.progress-fill {
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
+
+/* Question Top Navigation (Step Indicator) */
 .quiz-top-nav {
   display: flex;
-  justify-content: space-between;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+  /* Allow wrapping on small screens */
 }
+
 .nav-item-top {
-  flex-grow: 1;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 40px;
-  border-radius: 10px;
-  font-weight: 700;
-  color: var(--text-secondary);
-  background-color: var(--background-secondary);
-  border: 2px solid var(--border-color);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
   transition: all 0.3s ease;
 }
-.nav-item-top.answered { color: #28a745; border-color: #28a745; }
+
 .nav-item-top.active {
-  background-color: var(--primary-accent);
-  color: var(--text-primary);
-  border-color: var(--highlight-accent);
-  box-shadow: 0 4px 15px var(--shadow-color);
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+  transform: scale(1.15);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+  z-index: 2;
 }
 
-/* --- Quiz Card & Options Grid --- */
-.quiz-card {
-  width: 100%;
+.nav-item-top.answered {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  /* Green for answered */
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+/* Question Area */
+.question-content {
   min-height: 400px;
-  background-color: var(--background-secondary);
-  border-radius: 20px;
-  padding: 2.5rem;
-  border: 1px solid var(--border-color);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
 }
 
-.question-content { display: flex; flex-direction: column; }
 .question-text {
-  font-size: 1.75rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 2rem;
-  line-height: 1.4;
+
+  font-size: 2rem;
+  font-weight: 700;
   text-align: center;
+  margin-bottom: 3rem;
+  color: #fff;
+  line-height: 1.3;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
+/* Options Grid */
 .options-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 1rem;
-  max-height: 300px; /* Allow scrolling for long lists */
-  overflow-y: auto;
-  padding-right: 10px; /* For scrollbar spacing */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .option-card {
-  padding: 1rem;
-  background-color: var(--background-primary);
-  border: 2px solid var(--border-color);
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
   color: var(--text-secondary);
-  font-size: 0.95rem;
-  font-family: var(--font-family);
+  padding: 1.25rem;
+  border-radius: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.option-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-4px);
+  border-color: var(--text-muted);
+  color: var(--text-main);
+}
+
+.option-card.selected {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: var(--primary);
+  color: #fff;
+  box-shadow: 0 0 0 2px var(--primary), 0 10px 15px -3px rgba(59, 130, 246, 0.2);
+}
+
+.option-card.selected::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.2), transparent 70%);
+}
+
+/* Navigation Buttons */
+.quiz-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 2rem;
+  border-top: 1px solid var(--glass-border);
+}
+
+.btn-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 12px 28px;
+  border-radius: 12px;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  text-align: center;
   transition: all 0.2s ease;
+  border: none;
 }
-.option-card:hover {
-  border-color: var(--primary-accent);
-  color: var(--text-primary);
+
+.btn-back {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--glass-border);
 }
-.option-card.selected {
-  background-color: var(--primary-accent);
-  border-color: var(--highlight-accent);
-  color: var(--text-primary);
-  box-shadow: 0 4px 15px var(--shadow-color);
+
+.btn-back:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-main);
+  border-color: var(--text-muted);
+}
+
+.btn-next,
+.btn-submit {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+}
+
+.btn-next:hover,
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
+  filter: brightness(1.1);
+}
+
+.btn-nav:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Results View */
+.quiz-results {
+  text-align: center;
+  padding: 3rem;
+  animation: scaleIn 0.5s ease;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.quiz-results h3 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(to right, #fff, var(--text-secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+}
+
+.quiz-results p {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  margin-bottom: 3rem;
+  line-height: 1.6;
+}
+
+.quiz-results strong {
+  display: block;
+  font-size: 3rem;
+  margin-top: 1rem;
+  color: var(--primary);
+  text-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+}
+
+.btn-retake {
+  background: transparent;
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  padding: 12px 32px;
+}
+
+.btn-retake:hover {
+  background: rgba(59, 130, 246, 0.1);
   transform: translateY(-2px);
 }
-
-
-/* --- Navigation & Results --- */
-.quiz-navigation { display: flex; justify-content: space-between; width: 100%; margin-top: 1.5rem; }
-.btn-nav { padding: 12px 24px; border: none; border-radius: 10px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem; }
-.btn-back { background: transparent; color: var(--text-secondary); }
-.btn-back:hover:not(:disabled) { background: var(--surface-accent); color: var(--text-primary); }
-.btn-back:disabled { opacity: 0.4; cursor: not-allowed; }
-.btn-next, .btn-submit, .btn-retake { background-color: var(--primary-accent); color: var(--text-primary); box-shadow: 0 4px 15px var(--shadow-color); }
-.btn-next:hover, .btn-submit:hover, .btn-retake:hover { background-color: var(--highlight-accent); transform: translateY(-3px); box-shadow: 0 6px 20px var(--shadow-color); }
-
-.quiz-results {
-  width: 100%;
-  max-width: 600px;
-  text-align: center;
-  background-color: var(--background-secondary);
-  border-radius: 20px;
-  padding: 2.5rem;
-  border: 1px solid var(--border-color);
-  animation: fadeIn 0.5s ease;
-}
-.quiz-results h3 { color: var(--text-primary); font-size: 2rem; margin-bottom: 1rem; }
-.quiz-results p { font-size: 1.25rem; color: var(--text-secondary); }
-.quiz-results strong { color: var(--text-primary); }
-
-.error-message {
-    color: #e53e3e;
-    font-weight: 600;
-    margin-top: 1rem;
-    text-align: center;
-}
-
-@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-@keyframes slideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(-100%); opacity: 0; } }
-@keyframes slideInBack { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-@keyframes slideOutBack { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
-.slide-in { animation: slideIn 0.3s ease-out forwards; }
-.slide-out { animation: slideOut 0.3s ease-out forwards; }
-.slide-in-back { animation: slideInBack 0.3s ease-out forwards; }
-.slide-out-back { animation: slideOutBack 0.3s ease-out forwards; }

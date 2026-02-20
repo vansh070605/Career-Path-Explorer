@@ -1,98 +1,116 @@
-import React, { useState, useCallback, useLayoutEffect, useEffect } from 'react';
-import ReactFlow, { MiniMap, Controls, Background, useNodesState, useEdgesState } from 'reactflow';
+import React, { useState, useCallback, useEffect } from 'react';
+import ReactFlow, { MiniMap, Controls, Background, useNodesState, useEdgesState, MarkerType } from 'reactflow';
 import { getLayoutedElements } from './layout.js';
 import 'reactflow/dist/style.css';
 import './CareerPathVisualizer.css';
 import { useTranslation } from 'react-i18next';
 
-// --- Custom Node with Icon ---
+// --- Custom Node without Expansion Indicators ---
 const IconNode = ({ data }) => (
-    <div className="icon-node">
-        {data.icon && <i className={`node-icon ${data.icon}`}></i>}
-        <div className="node-label">{data.label}</div>
-    </div>
+  <div className={`icon-node leaf ${data.isPath ? 'active-path-node' : ''}`}>
+    {data.icon && <i className={`node-icon ${data.icon}`}></i>}
+    <div className="node-label">{data.label}</div>
+  </div>
 );
-const nodeTypes = { iconNode: IconNode };
+const nodeTypes = { iconNode: IconNode, input: IconNode, output: IconNode, default: IconNode };
 
-// --- Comprehensive Data Structure (with new descriptions) ---
-// --- NEW DATA ADDED ---
 const fullDataset = {
-    nodes: [
-        // Subjects (Inputs)
-        { id: 'sub-Maths', type: 'input', data: { label: 'Maths', icon: 'fas fa-calculator', description: 'The study of numbers, quantity, and space. Essential for logical reasoning and problem-solving in tech and finance.' } },
-        { id: 'sub-Physics', type: 'input', data: { label: 'Physics', icon: 'fas fa-atom', description: 'The science of matter and energy. Forms the basis for all engineering disciplines.' } },
-        { id: 'sub-Computer Science', type: 'input', data: { label: 'Computer Science', icon: 'fas fa-laptop-code', description: 'The study of computers and computational systems, including algorithms and data structures.' } },
-        { id: 'sub-Biology', type: 'input', data: { label: 'Biology', icon: 'fas fa-dna', description: 'The study of living organisms. Foundational for careers in medicine and life sciences.' } },
-        { id: 'sub-Economics', type: 'input', data: { label: 'Economics', icon: 'fas fa-chart-line', description: 'Analyzes the production, distribution, and consumption of goods and services. Key for finance and policy.' } },
-        
-        // Degrees
-        { id: 'deg-B.Tech CSE', data: { label: 'B.Tech CSE', icon: 'fas fa-graduation-cap', description: 'A 4-year engineering degree focused on software development, algorithms, and networking.' } },
-        { id: 'deg-B.Tech Mechanical', data: { label: 'B.Tech Mechanical', icon: 'fas fa-cogs', description: 'An engineering branch dealing with the design, construction, and use of machines.' } },
-        { id: 'deg-MBBS', data: { label: 'MBBS', icon: 'fas fa-stethoscope', description: 'A 5.5-year undergraduate medical degree to become a certified doctor.' } },
-        { id: 'deg-B.Com', data: { label: 'B.Com', icon: 'fas fa-file-invoice-dollar', description: 'A 3-year degree in commerce, covering subjects like accounting, finance, and taxation.' } },
-        { id: 'deg-BBA', data: { label: 'BBA', icon: 'fas fa-briefcase', description: 'A 3-year degree focused on business administration and management principles.' } },
-        { id: 'deg-BSc-Physics', data: { label: 'B.Sc. Physics', icon: 'fas fa-flask', description: 'A 3-year science degree exploring the fundamental principles of the universe.' } },
-        { id: 'deg-MBA', data: { label: 'MBA (Postgrad)', icon: 'fas fa-user-tie', description: 'A postgraduate degree providing theoretical and practical training for business management.' } },
+  nodes: [
+    // Level 0: Class 10th
+    { id: '10th', type: 'input', data: { label: 'Class 10th', icon: 'fas fa-school', description: 'Secondary School Certification.' } },
 
-        // Careers (Outputs)
-        { id: 'car-Software Engineer', type: 'output', data: { label: 'Software Engineer', icon: 'fas fa-code', description: 'Designs, develops, and maintains software applications. Requires strong coding skills.' } },
-        { id: 'car-Data Scientist', type: 'output', data: { label: 'Data Scientist', icon: 'fas fa-chart-pie', description: 'Analyzes large datasets to extract meaningful insights. Involves statistics and machine learning.' } },
-        { id: 'car-Doctor', type: 'output', data: { label: 'Doctor', icon: 'fas fa-user-md', description: 'Diagnoses and treats illnesses and injuries. Requires extensive medical training.' } },
-        { id: 'car-Financial Analyst', type: 'output', data: { label: 'Financial Analyst', icon: 'fas fa-money-check-alt', description: 'Provides guidance to businesses and individuals making investment decisions.' } },
-        { id: 'car-Consultant', type: 'output', data: { label: 'Management Consultant', icon: 'fas fa-users', description: 'Helps organizations solve problems, improve performance, and maximize growth.' } },
-        { id: 'car-PM', type: 'output', data: { label: 'Product Manager', icon: 'fas fa-rocket', description: 'Oversees the development of a product from conception to launch, bridging business and tech.' } },
-        { id: 'car-Researcher', type: 'output', data: { label: 'Research Scientist', icon: 'fas fa-microscope', description: 'Conducts experiments and analysis to advance knowledge in a particular scientific field.' } },
-    ],
-    edges: [
-        // Engineering Paths
-        { id: 'e1', source: 'sub-Maths', target: 'deg-B.Tech CSE' },
-        { id: 'e2', source: 'sub-Computer Science', target: 'deg-B.Tech CSE' },
-        { id: 'e3', source: 'sub-Maths', target: 'deg-B.Tech Mechanical' },
-        { id: 'e4', source: 'sub-Physics', target: 'deg-B.Tech Mechanical' },
-        { id: 'e7', source: 'deg-B.Tech CSE', target: 'car-Software Engineer' },
-        { id: 'e8', source: 'deg-B.Tech CSE', target: 'car-Data Scientist' },
-        
-        // Medical Path
-        { id: 'e5', source: 'sub-Biology', target: 'deg-MBBS' },
-        { id: 'e9', source: 'deg-MBBS', target: 'car-Doctor' },
+    // Level 1: Class 12th
+    { id: '12-sci-pcm', data: { label: '12th Science (PCM)', icon: 'fas fa-atom', description: 'Physics, Chemistry, Maths.' } },
+    { id: '12-sci-pcb', data: { label: '12th Science (PCB)', icon: 'fas fa-dna', description: 'Physics, Chemistry, Biology.' } },
+    { id: '12-comm', data: { label: '12th Commerce', icon: 'fas fa-chart-bar', description: 'Business, Accounts, Economics.' } },
+    { id: '12-arts', data: { label: '12th Arts', icon: 'fas fa-paint-brush', description: 'History, Pol Sci, Psychology.' } },
 
-        // Commerce/Finance Path
-        { id: 'e6', source: 'sub-Economics', target: 'deg-B.Com' },
-        { id: 'e10', source: 'deg-B.Com', target: 'car-Financial Analyst' },
-        
-        // --- NEW EDGES ---
-        // Business Paths
-        { id: 'e11', source: 'sub-Economics', target: 'deg-BBA' },
-        { id: 'e12', source: 'sub-Maths', target: 'deg-BBA' },
-        { id: 'e13', source: 'deg-BBA', target: 'deg-MBA' },
-        { id: 'e14', source: 'deg-B.Tech CSE', target: 'deg-MBA' }, // Common path
-        { id: 'e15', source: 'deg-MBA', target: 'car-Consultant' },
-        { id: 'e16', source: 'deg-MBA', target: 'car-PM' },
-        { id: 'e17', source: 'deg-B.Tech CSE', target: 'car-PM' }, // Direct path
-        
-        // Research Path
-        { id: 'e18', source: 'sub-Physics', target: 'deg-BSc-Physics' },
-        { id: 'e19', source: 'sub-Maths', target: 'deg-BSc-Physics' },
-        { id: 'e20', source: 'deg-BSc-Physics', target: 'car-Researcher' },
-    ]
+    // Level 2: Bachelors (UG)
+    { id: 'ug-btech-cse', data: { label: 'B.Tech CSE', icon: 'fas fa-code', description: 'B.Tech Computer Science.' } },
+    { id: 'ug-btech-mech', data: { label: 'B.Tech Mech', icon: 'fas fa-cogs', description: 'B.Tech Mechanical.' } },
+    { id: 'ug-mbbs', data: { label: 'MBBS', icon: 'fas fa-user-md', description: 'Medicine & Surgery.' } },
+    { id: 'ug-bsc-bio', data: { label: 'B.Sc Biology', icon: 'fas fa-microscope', description: 'B.Sc in Life Sciences.' } },
+    { id: 'ug-bcom', data: { label: 'B.Com / BBA', icon: 'fas fa-briefcase', description: 'Commerce / Business Admin.' } },
+    { id: 'ug-ba-psych', data: { label: 'BA Psychology', icon: 'fas fa-brain', description: 'Psychology.' } },
+    { id: 'ug-ba-polsci', data: { label: 'BA Pol. Science', icon: 'fas fa-globe', description: 'Political Science.' } },
+
+    // Level 3: Masters (PG)
+    { id: 'pg-mtech', data: { label: 'M.Tech', icon: 'fas fa-microchip', description: 'Masters in Technology.' } },
+    { id: 'pg-mba', data: { label: 'MBA', icon: 'fas fa-user-tie', description: 'Masters in Business Admin.' } },
+    { id: 'pg-md', data: { label: 'MD / MS', icon: 'fas fa-hospital', description: 'Medical Specialization.' } },
+    { id: 'pg-ma', data: { label: 'MA / MSc', icon: 'fas fa-book-open', description: 'Masters in Arts/Science.' } },
+
+    // Level 4: Jobs
+    { id: 'job-swe', type: 'output', data: { label: 'Software Engineer', icon: 'fas fa-laptop-code', description: 'Builds software & apps.' } },
+    { id: 'job-datasci', type: 'output', data: { label: 'Data Scientist', icon: 'fas fa-database', description: 'Analyzes big data.' } },
+    { id: 'job-mech-eng', type: 'output', data: { label: 'Mech. Engineer', icon: 'fas fa-tools', description: 'Mechanical systems design.' } },
+    { id: 'job-doctor', type: 'output', data: { label: 'Doctor', icon: 'fas fa-stethoscope', description: 'Specialized medical practitioner.' } },
+    { id: 'job-researcher', type: 'output', data: { label: 'Researcher', icon: 'fas fa-flask', description: 'Scientific research.' } },
+    { id: 'job-banker', type: 'output', data: { label: 'Inv. Banker / CA', icon: 'fas fa-money-bill-wave', description: 'Finance & Auditing.' } },
+    { id: 'job-manager', type: 'output', data: { label: 'Product Manager', icon: 'fas fa-tasks', description: 'Product strategy & leadership.' } },
+    { id: 'job-civil', type: 'output', data: { label: 'Civil Servant', icon: 'fas fa-university', description: 'Govt. Administration.' } },
+    { id: 'job-psych', type: 'output', data: { label: 'Psychologist', icon: 'fas fa-head-side-virus', description: 'Mental health therapy.' } },
+  ],
+  edges: [
+    // 10th -> 12th
+    { id: 'e1', source: '10th', target: '12-sci-pcm' },
+    { id: 'e2', source: '10th', target: '12-sci-pcb' },
+    { id: 'e3', source: '10th', target: '12-comm' },
+    { id: 'e4', source: '10th', target: '12-arts' },
+
+    // 12th -> UG
+    { id: 'e5', source: '12-sci-pcm', target: 'ug-btech-cse' },
+    { id: 'e6', source: '12-sci-pcm', target: 'ug-btech-mech' },
+    { id: 'e7', source: '12-sci-pcm', target: 'ug-bcom' },
+    { id: 'e8', source: '12-sci-pcb', target: 'ug-mbbs' },
+    { id: 'e9', source: '12-sci-pcb', target: 'ug-bsc-bio' },
+    { id: 'e10', source: '12-comm', target: 'ug-bcom' },
+    { id: 'e11', source: '12-arts', target: 'ug-ba-psych' },
+    { id: 'e12', source: '12-arts', target: 'ug-ba-polsci' },
+
+    // UG -> PG
+    { id: 'e13', source: 'ug-btech-cse', target: 'pg-mtech' },
+    { id: 'e14', source: 'ug-btech-cse', target: 'pg-mba' },
+    { id: 'e15', source: 'ug-btech-mech', target: 'pg-mba' },
+    { id: 'e16', source: 'ug-mbbs', target: 'pg-md' },
+    { id: 'e17', source: 'ug-bsc-bio', target: 'pg-ma' },
+    { id: 'e18', source: 'ug-bcom', target: 'pg-mba' },
+    { id: 'e19', source: 'ug-ba-psych', target: 'pg-ma' },
+    { id: 'e20', source: 'ug-ba-polsci', target: 'pg-ma' },
+
+    // UG -> Job
+    { id: 'e21', source: 'ug-btech-cse', target: 'job-swe' },
+    { id: 'e22', source: 'ug-btech-mech', target: 'job-mech-eng' },
+    { id: 'e23', source: 'ug-bcom', target: 'job-banker' },
+
+    // PG -> Job
+    { id: 'e24', source: 'pg-mtech', target: 'job-datasci' },
+    { id: 'e25', source: 'pg-mtech', target: 'job-swe' },
+    { id: 'e26', source: 'pg-mba', target: 'job-manager' },
+    { id: 'e27', source: 'pg-mba', target: 'job-banker' },
+    { id: 'e28', source: 'pg-md', target: 'job-doctor' },
+    { id: 'e29', source: 'pg-ma', target: 'job-researcher' },
+    { id: 'e30', source: 'pg-ma', target: 'job-psych' },
+    { id: 'e31', source: 'pg-ma', target: 'job-civil' },
+    { id: 'e32', source: 'ug-ba-polsci', target: 'job-civil' },
+  ]
 };
 
-// --- Side Panel Component (No Change) ---
+// Side Panel
 const SidePanel = ({ node, onClose }) => {
-    const { t } = useTranslation();
-    if (!node) return null;
-    return (
-        <div className="side-panel">
-            <button className="close-button" onClick={onClose}><i className="fas fa-times"></i></button>
-            <div className="panel-content">
-                <div className="panel-header">
-                    <i className={`panel-icon ${node.data.icon}`}></i>
-                    <h3>{node.data.label}</h3>
-                </div>
-                <p>{node.data.description}</p>
-            </div>
+  if (!node) return null;
+  return (
+    <div className={`side-panel ${node ? 'open' : ''}`}>
+      <button className="close-button" onClick={onClose}><i className="fas fa-times"></i></button>
+      <div className="panel-content">
+        <div className="panel-header">
+          <i className={`panel-icon ${node.data.icon}`}></i>
+          <h3>{node.data.label}</h3>
         </div>
-    );
+        <p>{node.data.description}</p>
+      </div>
+    </div>
+  );
 };
 
 const CareerPathVisualizer = () => {
@@ -100,71 +118,88 @@ const CareerPathVisualizer = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [selectedNode, setSelectedNode] = useState(null);
-  
-  // --- MODIFIED LOGIC ---
-  // State to track the node whose path is currently being displayed
-  const [activeNodeId, setActiveNodeId] = useState(null);
 
-  // Auto-layout effect (runs once on mount)
-  useLayoutEffect(() => {
-    getLayoutedElements(fullDataset.nodes, fullDataset.edges).then(({ nodes, edges }) => {
-      setNodes(nodes);
-      setEdges(edges);
-    });
-  }, []);
-
-  const onNodeMouseEnter = useCallback((event, node) => {
-    setEdges(prevEdges => prevEdges.map(edge => {
-        if (edge.source === node.id || edge.target === node.id) {
-            return { ...edge, animated: true, style: { ...edge.style, stroke: 'var(--highlight-accent)', strokeWidth: 3 } };
-        }
-        return edge;
-    }));
-  }, [setEdges]);
-
-  const onNodeMouseLeave = useCallback((event, node) => {
-    setEdges(prevEdges => prevEdges.map(edge => ({ ...edge, animated: false, style: { ...edge.style, stroke: 'var(--text-secondary)', strokeWidth: 2 } })));
-  }, [setEdges]);
-  
-  // Effect to apply styles when the active node changes
   useEffect(() => {
-    if (activeNodeId === null) {
-      // Reset all styles if no node is active
-      setNodes(nds => nds.map(n => ({ ...n, className: '' })));
-      setEdges(eds => eds.map(e => ({ ...e, animated: false, className: '' })));
-      return;
+    // 1. Identify active path nodes and edges
+    let pathNodeIds = new Set();
+    let pathEdgeIds = new Set();
+
+    if (selectedNode) {
+      pathNodeIds.add(selectedNode.id);
+      const findAncestors = (nodeId) => {
+        const incoming = fullDataset.edges.filter(e => e.target === nodeId);
+        incoming.forEach(e => {
+          pathEdgeIds.add(e.id);
+          pathNodeIds.add(e.source);
+          findAncestors(e.source);
+        });
+      };
+      findAncestors(selectedNode.id);
+
+      const findDescendants = (nodeId) => {
+        const outgoing = fullDataset.edges.filter(e => e.source === nodeId);
+        outgoing.forEach(e => {
+          pathEdgeIds.add(e.id);
+          pathNodeIds.add(e.target);
+          findDescendants(e.target);
+        });
+      };
+      findDescendants(selectedNode.id);
     }
 
-    // Find all connected nodes and edges for the active node
-    const connectedNodeIds = fullDataset.edges.reduce((acc, edge) => {
-        if (edge.source === activeNodeId) acc.add(edge.target);
-        if (edge.target === activeNodeId) acc.add(edge.source);
-        return acc;
-    }, new Set([activeNodeId]));
+    // 2. Map Nodes (Apply styling)
+    const currentNodes = fullDataset.nodes.map(n => {
+      const isPath = pathNodeIds.has(n.id);
+      const isDimmed = selectedNode && !isPath;
 
-    // Apply 'highlighted' or 'faded' classes based on connectivity
-    setNodes(nds => nds.map(n => ({
+      return {
         ...n,
-        className: connectedNodeIds.has(n.id) ? 'highlighted' : 'faded'
-    })));
+        data: { ...n.data, isPath },
+        style: {
+          opacity: isDimmed ? 0.3 : 1,
+          border: isPath && selectedNode ? '2px solid var(--primary)' : '1px solid var(--glass-border)',
+        }
+      };
+    });
 
-    setEdges(eds => eds.map(edge => ({
-        ...edge,
-        animated: edge.source === activeNodeId || edge.target === activeNodeId,
-        className: edge.source === activeNodeId || edge.target === activeNodeId ? 'highlighted' : 'faded',
-    })));
+    // 3. Map Edges (Apply styling - IMPORTANT: Force visibility via style)
+    const currentEdges = fullDataset.edges.map(e => {
+      const isPath = pathEdgeIds.has(e.id);
+      const isDimmed = selectedNode && !isPath;
 
-  }, [activeNodeId, setNodes, setEdges]);
+      return {
+        ...e,
+        type: 'smoothstep', // Orthogonal
+        animated: isPath,
+        style: {
+          stroke: isPath ? '#FFD700' : '#475569', // Gold vs Slate-600
+          strokeWidth: isPath ? 4 : 2,
+          opacity: isDimmed ? 0.1 : 1, // Dim others
+          strokeDasharray: isPath ? '10 8' : 'none',
+        },
+        zIndex: isPath ? 999 : 1, // High z-index for active path
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          color: isPath ? '#FFD700' : '#475569',
+        },
+      };
+    });
 
-  // Handle node click: set it as active for path display and for the side panel
+    // 4. Calculate Layout
+    getLayoutedElements(currentNodes, currentEdges).then(({ nodes: layoutedNodes }) => {
+      setNodes(layoutedNodes);
+      // DIRECTLY set edges here, bypassing any potential layout filtering
+      setEdges(currentEdges);
+    });
+
+  }, [selectedNode, setNodes, setEdges]); // Rerun when selection changes
+
   const onNodeClick = useCallback((event, node) => {
-    setSelectedNode(node);
-    setActiveNodeId(node.id);
+    // Toggle selection or select new
+    setSelectedNode(prev => (prev?.id === node.id ? null : node));
   }, []);
 
-  // Handle pane click: reset the view
   const onPaneClick = useCallback(() => {
-    setActiveNodeId(null);
     setSelectedNode(null);
   }, []);
 
@@ -172,7 +207,7 @@ const CareerPathVisualizer = () => {
     <div className="visualizer-container">
       <div className="visualizer-header">
         <h2>{t('visualizer.title')}</h2>
-        <p>{t('visualizer.subtitle')}</p>
+        <p>Click on any career stage to visualize the complete path from Class 10th to your Dream Job!</p>
       </div>
       <div className="visualizer-wrapper">
         <ReactFlow
@@ -185,17 +220,16 @@ const CareerPathVisualizer = () => {
           nodeTypes={nodeTypes}
           fitView
           proOptions={{ hideAttribution: true }}
-          paneClassName={activeNodeId ? 'clickable' : ''} // Add class for cursor change
+          minZoom={0.5}
         >
           <div className="visualizer-legend">
-            <div className="legend-item"><span className="color-box subjects"></span>{t('visualizer.legendSubjects')}</div>
-            <div className="legend-item"><span className="color-box degrees"></span>{t('visualizer.legendDegrees')}</div>
-            <div className="legend-item"><span className="color-box careers"></span>{t('visualizer.legendCareers')}</div>
+            <div className="legend-item"><span className="color-box stages"></span>Stages</div>
+            <div className="legend-item"><span className="color-box path"></span>Active Dotted Path</div>
           </div>
           <Controls />
           <Background variant="dots" gap={24} size={1} />
         </ReactFlow>
-        <SidePanel node={selectedNode} onClose={() => { setSelectedNode(null); setActiveNodeId(null); }} />
+        <SidePanel node={selectedNode} onClose={() => setSelectedNode(null)} />
       </div>
     </div>
   );

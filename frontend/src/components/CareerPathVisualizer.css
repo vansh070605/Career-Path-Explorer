@@ -5,23 +5,26 @@
     display: flex;
     flex-direction: column;
     animation: fadeIn 0.5s ease-out;
-    background-color: var(--background-primary, #f8f9fa); /* Fallback background */
+    background-color: transparent;
 }
+
 .visualizer-header {
     text-align: center;
-    padding: 1rem 0;
-    margin-bottom: 1.5rem;
+    padding: 0 0 1.5rem 0;
+    margin-bottom: 0;
     flex-shrink: 0;
 }
+
 .visualizer-header h2 {
     font-size: 2.25rem;
     font-weight: 700;
-    color: var(--text-primary, #212529);
+    color: var(--text-main);
     margin-bottom: 0.5rem;
 }
+
 .visualizer-header p {
     font-size: 1.1rem;
-    color: var(--text-secondary, #6c757d);
+    color: var(--text-secondary);
     line-height: 1.6;
 }
 
@@ -29,11 +32,12 @@
 .visualizer-wrapper {
     flex-grow: 1;
     height: 75vh;
-    border-radius: 16px;
-    border: 1px solid var(--border-color, #dee2e6);
-    overflow: hidden; 
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+    overflow: hidden;
     position: relative;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    background: rgba(15, 23, 42, 0.4);
 }
 
 /* --- Legend Styles --- */
@@ -41,52 +45,82 @@
     position: absolute;
     bottom: 20px;
     left: 20px;
-    background-color: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(8px);
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
     padding: 10px 15px;
     border-radius: 12px;
-    border: 1px solid var(--border-color, #dee2e6);
+    border: 1px solid var(--glass-border);
     z-index: 10;
     display: flex;
     gap: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
-.legend-item { display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 0.9rem; color: var(--text-secondary, #495057); }
-.color-box { width: 15px; height: 15px; border-radius: 4px; border: 1px solid rgba(0,0,0,0.1); }
-.color-box.subjects { background: var(--surface-accent, #e7f5ff); }
-.color-box.degrees { background: var(--background-secondary, #ffffff); }
-.color-box.careers { background: var(--highlight-accent-light, #d0bfff); }
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.color-box {
+    width: 12px;
+    height: 12px;
+    border-radius: 4px;
+}
+
+.color-box.subjects {
+    background: var(--accent);
+    opacity: 0.8;
+}
+
+.color-box.degrees {
+    background: var(--text-main);
+    opacity: 0.8;
+}
+
+.color-box.careers {
+    background: var(--secondary);
+    opacity: 0.8;
+}
 
 /* --- Base React Flow Node Styles --- */
 .react-flow .react-flow__node {
     border-radius: 12px;
-    font-family: var(--font-family, 'Inter', sans-serif);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    font-family: var(--font-body);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    min-width: 200px;
-    border: 2px solid transparent;
+    min-width: 180px;
+    border: 1px solid var(--glass-border);
     padding: 0;
-    background: var(--background-secondary, #ffffff);
+    background: var(--glass-bg);
+    /* Dark glass nodes */
+    color: var(--text-main);
+    backdrop-filter: blur(8px);
 }
+
 .react-flow .react-flow__node:hover {
     transform: translateY(-5px) scale(1.03);
-    border-color: var(--highlight-accent, #7c5cbf);
-    box-shadow: 0 8px 25px var(--shadow-color, rgba(124, 92, 191, 0.2));
+    border-color: var(--primary);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+    z-index: 10;
 }
 
 /* --- Node Type Specific Styles --- */
 .react-flow .react-flow__node-input {
-    background: linear-gradient(135deg, var(--surface-accent, #e7f5ff), #fff);
-    border-left: 5px solid var(--primary-accent, #339af0);
+    border-left: 4px solid var(--accent);
 }
+
 .react-flow .react-flow__node-output {
-    background: linear-gradient(135deg, var(--highlight-accent-light, #e9d5ff), #fff);
-    border-right: 5px solid var(--highlight-accent, #7c5cbf);
+    border-right: 4px solid var(--secondary);
 }
+
 .react-flow .react-flow__node.selected {
-    border-color: var(--highlight-accent, #7c5cbf);
-    box-shadow: 0 0 0 3px var(--highlight-accent-light, rgba(124, 92, 191, 0.3));
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
 }
 
 /* --- Custom Node Content --- */
@@ -95,90 +129,189 @@
     align-items: center;
     gap: 12px;
     padding: 12px 18px;
+    position: relative;
+    border-radius: 12px;
+    background: inherit;
+    transition: all 0.3s ease;
 }
-.node-icon { font-size: 1.5rem; color: var(--text-primary, #343a40); width: 30px; text-align: center; }
-.node-label { font-weight: 600; font-size: 1rem; color: var(--text-primary, #343a40); }
+
+.icon-node:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.node-icon {
+    font-size: 1.2rem;
+    color: var(--primary);
+    width: 24px;
+    text-align: center;
+}
+
+.node-label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-main);
+}
+
+/* Expand Indicator */
+.expand-indicator {
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background: var(--bg-core);
+    border: 2px solid var(--accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    color: var(--text-main);
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease;
+}
+
+.icon-node:hover .expand-indicator {
+    transform: translateY(-50%) scale(1.2);
+}
+
+.icon-node.expanded .expand-indicator {
+    background: var(--accent);
+    color: var(--bg-core);
+}
+
+.icon-node.leaf {
+    cursor: default;
+    border-color: var(--glass-border);
+}
+
+/* Override React Flow Node Border for specific states */
+.react-flow .react-flow__node {
+    /* ... existing styles ... */
+    overflow: visible;
+    /* Allow indicator to stick out */
+}
 
 /* --- Edge Styles --- */
 .react-flow__edge-path {
-    stroke: var(--text-secondary, #adb5bd);
+    stroke: var(--text-muted);
     stroke-width: 2;
     transition: stroke 0.3s ease, opacity 0.3s ease;
 }
+
 .react-flow__edge.highlighted .react-flow__edge-path {
-    stroke: var(--highlight-accent, #7c5cbf);
+    stroke: var(--primary);
     stroke-width: 3;
+    filter: drop-shadow(0 0 3px var(--primary));
 }
 
 /* --- FOCUS MODE STYLES (NEW) --- */
-.react-flow__node.faded, .react-flow__edge.faded {
-    opacity: 0.2;
+.react-flow__node.faded,
+.react-flow__edge.faded {
+    opacity: 0.1;
     transition: opacity 0.3s ease;
 }
-.react-flow__node.highlighted, .react-flow__edge.highlighted {
+
+.react-flow__node.highlighted,
+.react-flow__edge.highlighted {
     opacity: 1;
 }
 
 /* --- Side Panel Styles --- */
 .side-panel {
-    position: absolute; top: 0; right: 0;
-    width: 340px; height: 100%;
-    background-color: var(--background-secondary, #ffffff);
-    border-left: 1px solid var(--border-color, #dee2e6);
-    box-shadow: -10px 0 30px rgba(0,0,0,0.07);
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 340px;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.95);
+    border-left: 1px solid var(--glass-border);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
     z-index: 20;
+    backdrop-filter: blur(20px);
     animation: slideInFromRight 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    display: flex; flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
+
 @keyframes slideInFromRight {
-    from { transform: translateX(100%); }
-    to { transform: translateX(0); }
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
 }
 
 .close-button {
-    position: absolute; top: 15px; right: 15px;
-    background: var(--background-primary, #f1f3f5);
-    border: 1px solid var(--border-color, #dee2e6);
-    border-radius: 50%; width: 32px; height: 32px;
-    cursor: pointer; display: flex; align-items: center; justify-content: center;
-    color: var(--text-secondary, #868e96);
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
     transition: all 0.2s ease;
     z-index: 21;
 }
+
 .close-button:hover {
-    background: var(--border-color, #e9ecef);
-    color: var(--text-primary, #212529);
+    background: var(--glass-highlight);
+    color: var(--text-main);
     transform: rotate(90deg);
 }
 
-.panel-content { padding: 60px 2rem 2rem 2rem; }
+.panel-content {
+    padding: 60px 2rem 2rem 2rem;
+}
+
 .panel-header {
-    display: flex; align-items: center; gap: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid var(--border-color, #e9ecef);
-}
-.panel-icon { font-size: 2.25rem; color: var(--primary-accent, #339af0); }
-.panel-content h3 { font-size: 1.5rem; font-weight: 700; color: var(--text-primary, #212529); margin: 0; }
-.panel-content p { font-size: 1rem; color: var(--text-secondary, #495057); line-height: 1.7; }
-
-/* --- (All previous styles remain the same) --- */
-
-/* ... existing CSS ... */
-
-/* --- FOCUS MODE STYLES --- */
-.react-flow__node.faded, .react-flow__edge.faded {
-    opacity: 0.2;
-    transition: opacity 0.3s ease;
-}
-.react-flow__node.highlighted, .react-flow__edge.highlighted {
-    opacity: 1;
+    border-bottom: 1px solid var(--glass-border);
 }
 
-/* --- NEW STYLE FOR CLICKABLE PANE --- */
-.react-flow__pane.clickable {
-    cursor: pointer;
+.panel-icon {
+    font-size: 2rem;
+    color: var(--accent);
 }
 
-/* --- Side Panel Styles --- */
-/* ... existing CSS ... */
+.panel-content h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin: 0;
+}
+
+.panel-content p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+/* Control Buttons (React Flow controls override) */
+.react-flow__controls {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.react-flow__controls-button {
+    background: var(--bg-core);
+    border-bottom: 1px solid var(--glass-border);
+    fill: var(--text-main);
+}
+
+.react-flow__controls-button:hover {
+    background: var(--glass-highlight);
+}

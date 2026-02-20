@@ -25,47 +25,54 @@ const Header = ({ user, onLogout, unreadCount = 0, onNotificationClick }) => {
   };
 
   return (
-    <header className="dashboard-header">
-      {/* Left side: Date + Time */}
-      <div className="header-datetime">
-        <span>
-          {currentTime.toLocaleDateString(undefined, {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          })}
+    <header className="header-shell">
+      <div className="header-left">
+        <span className="header-date">
+          {currentTime.toLocaleDateString(undefined, { weekday: 'short', month: 'long', day: 'numeric' })}
         </span>
-        <span>{currentTime.toLocaleTimeString()}</span>
+        <span className="header-time">
+          {currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+        </span>
       </div>
 
-      {/* Right side: Lang switch, notifications, user info */}
-      <div className="header-user-profile">
+      <div className="header-right">
         <select
           value={i18n.language || 'en'}
           onChange={handleLangChange}
-          className="lang-switcher"
+          style={{
+            background: 'rgba(255,255,255,0.05)',
+            border: '1px solid var(--glass-border)',
+            color: 'var(--text-main)',
+            padding: '6px 10px',
+            borderRadius: '8px',
+            outline: 'none',
+            cursor: 'pointer'
+          }}
         >
-          <option value="en">English</option>
-          <option value="hi">हिंदी</option>
-          <option value="ur">اردو</option>
+          <option value="en" style={{ color: '#000' }}>English</option>
+          <option value="hi" style={{ color: '#000' }}>हिंदी</option>
+          <option value="ur" style={{ color: '#000' }}>اردو</option>
         </select>
 
-        <div className="notification-bell" onClick={onNotificationClick}>
+        <button className="btn-icon" onClick={onNotificationClick}>
           <i className="fas fa-bell"></i>
-          {unreadCount > 0 && (
-            <span className="notification-badge">{unreadCount}</span>
-          )}
+          {unreadCount > 0 && <span className="notification-badge">{unreadCount}</span>}
+        </button>
+
+        <div className="user-profile">
+          <div className="avatar-circle">
+            {formatUsername(user).charAt(0)}
+          </div>
+          <span className="user-name">{formatUsername(user)}</span>
         </div>
 
-        <span>
-          {t('common.welcomeUser', { name: formatUsername(user) })}
-        </span>
-        <button onClick={onLogout} className="btn-logout">
-          {t('common.logout')}
+        <button onClick={onLogout} className="btn-icon" title="Logout" style={{ borderColor: 'var(--error)', color: 'var(--error)' }}>
+          <i className="fas fa-sign-out-alt"></i>
         </button>
       </div>
     </header>
+
+
   );
 };
 
