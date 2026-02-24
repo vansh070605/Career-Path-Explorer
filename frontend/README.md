@@ -1,12 +1,41 @@
-# React + Vite
+# 🌐 CAPE Frontend — Interface & Visualization
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the primary user interface for **CAPE (Career Path Explorer)**. Built with React and Vite, it focuses on providing a high-performance, interactive, and visually stunning experience for exploring career data.
 
-Currently, two official plugins are available:
+## ✨ Key Features
+- **Dynamic Career Visualizer**: Powered by `reactflow` and `elkjs` for complex graph layouts.
+- **Interactive Roadmap**: Real-time path tracing with animated dotted connections.
+- **Glassmorphism Design**: Modern UI aesthetic using consistent design tokens.
+- **Smooth Animations**: Integrated `framer-motion` for transitions and micro-interactions.
+- **Responsive Layout**: Works across different screen sizes.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠️ Technology Stack
+- **Framework**: React 18+
+- **Build Tool**: Vite
+- **Graph Engine**: React Flow
+- **Layout Engine**: ELK.js
+- **Animations**: Framer Motion
+- **Icons**: FontAwesome 6
 
-## Expanding the ESLint configuration
+## 🚀 Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+2. **Setup environment**:
+   Create a `.env` file if you need to point to a custom backend URL (default is `http://127.0.0.1:5000`):
+   ```
+   VITE_API_URL=http://localhost:5000
+   ```
+
+3. **Run in development**:
+   ```bash
+   npm run dev
+   ```
+
+4. **Build for production**:
+   ```bash
+   npm run build
+   ```
