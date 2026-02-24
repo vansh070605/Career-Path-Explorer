@@ -18,9 +18,9 @@ BASE = os.path.dirname(__file__)
 
 # ================== Load Quiz ML Model ==================
 try:
-    quiz_model = joblib.load(os.path.join(BASE, "career_1200_model.pkl"))
-    quiz_vectorizer = joblib.load(os.path.join(BASE, "quiz_vectorizer.pkl"))
-    quiz_encoder = joblib.load(os.path.join(BASE, "quiz_label_encoder.pkl"))
+    quiz_model = joblib.load(os.path.join(BASE, "models", "career_1200_model.pkl"))
+    quiz_vectorizer = joblib.load(os.path.join(BASE, "models", "quiz_vectorizer.pkl"))
+    quiz_encoder = joblib.load(os.path.join(BASE, "models", "quiz_label_encoder.pkl"))
     print("✅ Quiz model loaded")
 except Exception as e:
     print("⚠️ Could not load quiz model:", e)
@@ -32,7 +32,7 @@ print("Embedding model loaded. Embedding dim:", emb_model.get_sentence_embedding
 
 # ================== Load Colleges Dataset ==================
 try:
-    colleges = pd.read_csv(os.path.join(BASE, "colleges.csv"))
+    colleges = pd.read_csv(os.path.join(BASE, "data", "colleges.csv"))
     colleges.columns = [c.strip().lower() for c in colleges.columns]  # normalize headers
     print("✅ Colleges dataset loaded with", len(colleges), "rows")
 except Exception as e:

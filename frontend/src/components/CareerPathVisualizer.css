@@ -11,8 +11,6 @@
 .visualizer-header {
     text-align: center;
     padding: 0 0 1.5rem 0;
-    margin-bottom: 0;
-    flex-shrink: 0;
 }
 
 .visualizer-header h2 {
@@ -25,10 +23,9 @@
 .visualizer-header p {
     font-size: 1.1rem;
     color: var(--text-secondary);
-    line-height: 1.6;
 }
 
-/* --- Wrapper for Flow and Side Panel --- */
+/* --- Wrapper --- */
 .visualizer-wrapper {
     flex-grow: 1;
     height: 75vh;
@@ -40,186 +37,77 @@
     background: rgba(15, 23, 42, 0.4);
 }
 
-/* --- Legend Styles --- */
-.visualizer-legend {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    padding: 10px 15px;
-    border-radius: 12px;
-    border: 1px solid var(--glass-border);
-    z-index: 10;
-    display: flex;
-    gap: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.legend-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 500;
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-}
-
-.color-box {
-    width: 12px;
-    height: 12px;
-    border-radius: 4px;
-}
-
-.color-box.subjects {
-    background: var(--accent);
-    opacity: 0.8;
-}
-
-.color-box.degrees {
-    background: var(--text-main);
-    opacity: 0.8;
-}
-
-.color-box.careers {
-    background: var(--secondary);
-    opacity: 0.8;
-}
-
-/* --- Base React Flow Node Styles --- */
-.react-flow .react-flow__node {
-    border-radius: 12px;
+/* --- MindMap Node Styles --- */
+.mindmap-node {
+    padding: 12px 24px;
+    border-radius: 50px;
     font-family: var(--font-body);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    min-width: 180px;
-    border: 1px solid var(--glass-border);
-    padding: 0;
-    background: var(--glass-bg);
-    /* Dark glass nodes */
-    color: var(--text-main);
-    backdrop-filter: blur(8px);
-}
-
-.react-flow .react-flow__node:hover {
-    transform: translateY(-5px) scale(1.03);
-    border-color: var(--primary);
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
-    z-index: 10;
-}
-
-/* --- Node Type Specific Styles --- */
-.react-flow .react-flow__node-input {
-    border-left: 4px solid var(--accent);
-}
-
-.react-flow .react-flow__node-output {
-    border-right: 4px solid var(--secondary);
-}
-
-.react-flow .react-flow__node.selected {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
-}
-
-/* --- Custom Node Content --- */
-.icon-node {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 18px;
-    position: relative;
-    border-radius: 12px;
-    background: inherit;
-    transition: all 0.3s ease;
-}
-
-.icon-node:hover {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.node-icon {
-    font-size: 1.2rem;
-    color: var(--primary);
-    width: 24px;
-    text-align: center;
-}
-
-.node-label {
-    font-weight: 600;
-    font-size: 0.9rem;
-    color: var(--text-main);
-}
-
-/* Expand Indicator */
-.expand-indicator {
-    position: absolute;
-    right: -10px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
-    background: var(--bg-core);
-    border: 2px solid var(--accent);
-    border-radius: 50%;
+    font-weight: 700;
+    font-size: 0.95rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.7rem;
-    color: var(--text-main);
+    gap: 10px;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    width: fit-content;
+    min-width: 160px;
+}
+
+.mindmap-node:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* Highlighting path */
+.mindmap-node.active-path {
+    border: 3px solid #fff !important;
+    box-shadow: 0 0 20px #fff, 0 0 40px rgba(255, 255, 255, 0.3);
+    transform: scale(1.08);
     z-index: 10;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    transition: all 0.2s ease;
 }
 
-.icon-node:hover .expand-indicator {
-    transform: translateY(-50%) scale(1.2);
+.mindmap-node.active-path .node-label {
+    color: #fff;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
-.icon-node.expanded .expand-indicator {
-    background: var(--accent);
-    color: var(--bg-core);
+.node-icon {
+    font-size: 1.1rem;
+    opacity: 0.9;
 }
 
-.icon-node.leaf {
-    cursor: default;
-    border-color: var(--glass-border);
+/* --- Category Color Themes --- */
+/* Vibrant gradients for a systematic look */
+.school {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: #fff;
 }
 
-/* Override React Flow Node Border for specific states */
-.react-flow .react-flow__node {
-    /* ... existing styles ... */
-    overflow: visible;
-    /* Allow indicator to stick out */
+.high-school {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    color: #fff;
 }
 
-/* --- Edge Styles --- */
-.react-flow__edge-path {
-    stroke: var(--text-muted);
-    stroke-width: 2;
-    transition: stroke 0.3s ease, opacity 0.3s ease;
+.college {
+    background: linear-gradient(135deg, #06b6d4, #0891b2);
+    color: #fff;
 }
 
-.react-flow__edge.highlighted .react-flow__edge-path {
-    stroke: var(--primary);
-    stroke-width: 3;
-    filter: drop-shadow(0 0 3px var(--primary));
+.postgrad {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: #fff;
 }
 
-/* --- FOCUS MODE STYLES (NEW) --- */
-.react-flow__node.faded,
-.react-flow__edge.faded {
-    opacity: 0.1;
-    transition: opacity 0.3s ease;
+.career {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #fff;
 }
 
-.react-flow__node.highlighted,
-.react-flow__edge.highlighted {
-    opacity: 1;
-}
-
-/* --- Side Panel Styles --- */
+/* --- Side Panel --- */
 .side-panel {
     position: absolute;
     top: 0;
@@ -228,90 +116,203 @@
     height: 100%;
     background: rgba(15, 23, 42, 0.95);
     border-left: 1px solid var(--glass-border);
-    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
-    z-index: 20;
     backdrop-filter: blur(20px);
-    animation: slideInFromRight 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: 20;
+    padding: 40px 25px;
     display: flex;
     flex-direction: column;
-}
-
-@keyframes slideInFromRight {
-    from {
-        transform: translateX(100%);
-    }
-
-    to {
-        transform: translateX(0);
-    }
-}
-
-.close-button {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--glass-border);
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-secondary);
-    transition: all 0.2s ease;
-    z-index: 21;
-}
-
-.close-button:hover {
-    background: var(--glass-highlight);
-    color: var(--text-main);
-    transform: rotate(90deg);
-}
-
-.panel-content {
-    padding: 60px 2rem 2rem 2rem;
+    gap: 20px;
 }
 
 .panel-header {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--glass-border);
+    gap: 15px;
+    margin-bottom: 10px;
 }
 
-.panel-icon {
-    font-size: 2rem;
-    color: var(--accent);
+.panel-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
 }
 
-.panel-content h3 {
-    font-size: 1.5rem;
+/* Side Panel Indicators */
+.panel-indicator.school {
+    background: #3b82f6;
+}
+
+.panel-indicator.high-school {
+    background: #8b5cf6;
+}
+
+.panel-indicator.college {
+    background: #06b6d4;
+}
+
+.panel-indicator.postgrad {
+    background: #f59e0b;
+}
+
+.panel-indicator.career {
+    background: #10b981;
+}
+
+.panel-stats {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.stat span {
+    color: var(--text-main);
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.25rem;
+    cursor: pointer;
+    align-self: flex-end;
+}
+
+.close-button:hover {
+    color: var(--text-main);
+}
+
+/* --- Roadmap Timeline (Bottom) --- */
+.roadmap-timeline {
+    margin-top: 2rem;
+    padding: 1.5rem 2.5rem;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    animation: slideInUp 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.roadmap-timeline h3 {
+    font-size: 1.25rem;
     font-weight: 700;
     color: var(--text-main);
-    margin: 0;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.panel-content p {
-    font-size: 1rem;
-    color: var(--text-secondary);
-    line-height: 1.7;
+.roadmap-timeline h3 i {
+    color: #3b82f6;
 }
 
-/* Control Buttons (React Flow controls override) */
-.react-flow__controls {
+.timeline-steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+}
+
+.timeline-step {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.step-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: #fff;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 2;
 }
 
-.react-flow__controls-button {
-    background: var(--bg-core);
-    border-bottom: 1px solid var(--glass-border);
-    fill: var(--text-main);
+/* Reuse category colors for timeline circles */
+.step-circle.school {
+    background: var(--school-grad, linear-gradient(135deg, #3b82f6, #2563eb));
 }
 
-.react-flow__controls-button:hover {
-    background: var(--glass-highlight);
+.step-circle.high-school {
+    background: var(--high-school-grad, linear-gradient(135deg, #8b5cf6, #7c3aed));
+}
+
+.step-circle.college {
+    background: var(--college-grad, linear-gradient(135deg, #06b6d4, #0891b2));
+}
+
+.step-circle.postgrad {
+    background: var(--postgrad-grad, linear-gradient(135deg, #f59e0b, #d97706));
+}
+
+.step-circle.career {
+    background: var(--career-grad, linear-gradient(135deg, #10b981, #059669));
+}
+
+.step-info {
+    margin: 0 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.step-label {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text-main);
+}
+
+.step-category {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.step-connector {
+    margin: 0 10px;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* --- Edge Animation Override (prominent dotted line) --- */
+.react-flow__edge-path {
+    transition: stroke-dashoffset 2s linear infinite;
+}
+
+.react-flow__edge.animated .react-flow__edge-path {
+    stroke-dasharray: 10, 5;
+    animation: dashdraw 0.5s linear infinite;
+}
+
+@keyframes dashdraw {
+    from {
+        stroke-dashoffset: 15;
+    }
+
+    to {
+        stroke-dashoffset: 0;
+    }
 }
